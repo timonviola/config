@@ -1,0 +1,13 @@
+---
+- name: "pipx install black"
+  hosts: localhost
+  gather_facts: true
+  tasks:
+    - name: is black installed
+      shell: command -v black
+      register: black_exists
+      ignore_errors: yes
+
+    - name: install black
+      when: black_exists is failed
+      shell: pipx install black
