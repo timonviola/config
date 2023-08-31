@@ -3,3 +3,6 @@
 source = "~/Documents/config/config/.tmux.conf"
 target = "~/.tmux.conf"
 
+[tool.neovim]
+source = "~/Documents/config/config/nvim"
+target = "~/.config/nvim"

@@ -1,0 +1,2 @@
+require("timon")
+print("initlua")
