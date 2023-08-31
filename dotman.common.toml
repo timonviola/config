@@ -1,0 +1,5 @@
+[tool]
+[tool.tmux]
+source = "~/Documents/config/config/.tmux.conf"
+target = "~/.tmux.conf"
+
