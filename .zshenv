@@ -7,3 +7,7 @@ fi
 if [ -d "$HOME/.cargo/env" ] ; then
     . "$HOME/.cargo/env"
 fi
+
+if [ -d "$PATH:/opt/mssql-tools/bin" ] ; then
+    PATH="$PATH:/opt/mssql-tools/bin"
+fi

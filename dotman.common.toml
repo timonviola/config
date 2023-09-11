@@ -6,3 +6,12 @@ target = "~/.tmux.conf"
 [tool.neovim]
 source = "~/Documents/config/config/nvim"
 target = "~/.config/nvim"
+
+[tool.zshenv]
+source = "~/Documents/config/config/.zshenv"
+target = "~/.zshenv"
+
+
+[tool.zshrc]
+source = "~/Documents/config/config/.zshrc"
+target = "~/.zshrc"
