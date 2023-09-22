@@ -8,7 +8,7 @@ return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
   use 'williamboman/mason.nvim'
-  use 'folke/tokyonight.nvim'
+  use 'sainnhe/gruvbox-material'
   use {
       'nvim-telescope/telescope.nvim', tag = '0.1.0',
       -- or                            , branch = '0.1.x',
