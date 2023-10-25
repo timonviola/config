@@ -1,5 +1,7 @@
 -- Learn the keybindings, see :help lsp-zero-keybindings
 -- Learn to configure LSP servers, see :help lsp-zero-api-showcase
+--
+-- kudos to the primagen for giving me a good starting point
 local lsp = require('lsp-zero')
 lsp.preset('recommended')
 
@@ -11,18 +13,23 @@ lsp.ensure_installed({
 -- Fix Undefined global 'vim'
 lsp.nvim_workspace()
 
-
+-- Remap LSP actions
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
 local cmp_mappings = lsp.defaults.cmp_mappings({
   ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
   ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+  -- nvim default
   ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+  -- manually invoke completion
   ["<C-Space>"] = cmp.mapping.complete(),
 })
 
+-- disable regular/super tab completion
 cmp_mappings['<Tab>'] = nil
 cmp_mappings['<S-Tab>'] = nil
+cmp_mappings['<C-j>'] = cmp.mapping.scroll_docs(4)
+cmp_mappings['<C-k>'] = cmp.mapping.scroll_docs(-4)
 
 lsp.setup_nvim_cmp({
   mapping = cmp_mappings
