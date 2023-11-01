@@ -7,6 +7,18 @@ target = "~/.gitconfig"
 source = "~/Documents/config/config/.tmux.conf"
 target = "~/.tmux.conf"
 
+[tool.tmux_cmd]
+source = "~/Documents/config/config/.tmux-cht-command"
+target = "~/.tmux-cht-command"
+
+[tool.tmux_lang]
+source = "~/Documents/config/config/.tmux-cht-languages"
+target = "~/.tmux-cht-languages"
+
+[tool.scripts_cht]
+source = "~/Documents/config/config/scripts/tmux-cht.sh"
+target = "~/tmux-cht.sh"
+
 [tool.neovim]
 source = "~/Documents/config/config/nvim"
 target = "~/.config/nvim"
