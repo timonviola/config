@@ -28,11 +28,12 @@ plugins=(docker git)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-# Autocomletion for pipx in zsh
+# Autocopmletion for pipx in zsh
 autoload -Uz compinit
 compinit
 eval "$(register-python-argcomplete pipx)"
-
+# kubectl autocompletion
+source <(kubectl completion zsh)
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
