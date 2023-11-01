@@ -17,7 +17,7 @@ target = "~/.tmux-cht-languages"
 
 [tool.scripts_cht]
 source = "~/Documents/config/config/scripts/tmux-cht.sh"
-target = "~/tmux-cht.sh"
+target = "~/.local/bin/tmux-cht.sh"
 
 [tool.neovim]
 source = "~/Documents/config/config/nvim"
