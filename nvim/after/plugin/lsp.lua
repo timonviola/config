@@ -7,7 +7,7 @@ lsp.preset('recommended')
 
 -- (Optional) Configure lua language server for neovim
 lsp.ensure_installed({
-'ruff_lsp','lua_ls','rust_analyzer',
+  'pyright','lua_ls','rust_analyzer',
 })
 
 -- Fix Undefined global 'vim'
@@ -60,9 +60,9 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
 
-lsp.setup()
 
 vim.diagnostic.config({
     virtual_text = true
 })
 
+lsp.setup()
