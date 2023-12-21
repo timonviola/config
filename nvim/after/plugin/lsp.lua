@@ -66,3 +66,14 @@ vim.diagnostic.config({
 })
 
 lsp.setup()
+
+-- try fixing pright venv detection:
+local lspconfig = require('lspconfig')
+local python_root_files = {
+    'pyrightconfig.json',
+    'pyproject.toml',
+}
+lspconfig["pyright"].setup {
+    on_attach = on_attach,
+    root_dir = lspconfig.util.root_pattern(unpack(python_root_files))
+}
