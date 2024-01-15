@@ -44,4 +44,13 @@ return require('packer').startup(function(use)
         {'rafamadriz/friendly-snippets'}, -- Optional
       }
     }
+   -- docstring generation https://github.com/danymat/neogen#installation
+    use {
+        'danymat/neogen',
+        config = function()
+            require('neogen').setup {}
+        end,
+        requires = 'nvim-treesitter/nvim-treesitter',
+        tag = "*"
+      }
 end)
