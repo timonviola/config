@@ -4,5 +4,8 @@ vim.opt.background = "dark"
 
 -- vim.cmd("colorscheme tokyonight")
 -- in regular mac terminal:
-vim.cmd("set termguicolors")
+vim.cmd("let g:gruvbox_invert_selection = 0")
+vim.cmd("let g:gruvbox_contrast_dark = 'hard'")
+vim.cmd("let g:gruvbox_material_visual='green background'")
 vim.cmd("colorscheme gruvbox-material")
+vim.cmd("set termguicolors")
