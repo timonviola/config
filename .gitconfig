@@ -18,3 +18,8 @@
     tool = vscode
 [difftool "vscode"]
     cmd = code --wait --diff $LOCAL $REMOTE
+[push]
+	autoSetupRemote = true
+[includeIf "gitdir:~/work/"]
+    path = .gitconfig-dfds
+
