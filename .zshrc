@@ -33,12 +33,27 @@ echo "$machine";
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
+
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(docker git aws)
+# MAC specific settings
+if [ "$(getos)" = Mac ]; then                                              
+    plugins=(docker git aws)
+else
+    plugins=(git)
+fi
 
-source $ZSH/oh-my-zsh.sh
 
 # User configuration
 # Autocopmletion for pipx in zsh
@@ -50,21 +65,11 @@ source <(kubectl completion zsh)
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='nvim'
-fi
-
 # MAC specific settings
 if [ "$(getos)" = Mac ]; then                                              
     export AWS_PROFILE=saml
+    export HOMEBREW_NO_AUTO_UPDATE=1
 fi
-
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -79,6 +84,8 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim=nvim
 
+# oh-my-zsh
+source $ZSH/oh-my-zsh.sh
 # Use starship prompt
 eval "$(starship init zsh)"
 
@@ -88,3 +95,7 @@ eval "$(starship init zsh)"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+#tmux
+if [ "$TMUX" = "" ]; then tmux; fi
+
