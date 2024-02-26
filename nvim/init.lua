@@ -1,2 +1,2 @@
 require("timon")
--- print("initlua")
+print("initlua")
