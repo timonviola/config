@@ -56,4 +56,7 @@ return require('packer').startup(function(use)
         requires = 'nvim-treesitter/nvim-treesitter',
         tag = "*"
       }
+   -- notifications
+   use 'rcarriga/nvim-notify'
+   use 'timonviola/easy-to-change.nvim'
 end)
