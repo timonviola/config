@@ -61,7 +61,10 @@ autoload -Uz compinit
 compinit
 eval "$(register-python-argcomplete pipx)"
 # kubectl autocompletion
-source <(kubectl completion zsh)
+if [ "$(getos)" = Mac ]; then                                              
+    source <(kubectl completion zsh)
+    source <(helm completion zsh)
+fi
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -69,6 +72,10 @@ source <(kubectl completion zsh)
 if [ "$(getos)" = Mac ]; then                                              
     export AWS_PROFILE=saml
     export HOMEBREW_NO_AUTO_UPDATE=1
+    export KUBECONFIG=~/.kube/hellman-saml.config
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+    export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+    source /Users/timon/work/airflow/dev/breeze/autocomplete/breeze-complete-zsh.sh
 fi
 
 # Compilation flags
