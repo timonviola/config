@@ -9,8 +9,12 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'williamboman/mason.nvim'
   -- Colorscheme:
-  use 'sainnhe/gruvbox-material'
-  -- use 'folke/tokyonight.nvim'
+  use {
+      'folke/tokyonight.nvim',
+      lazy = false,
+      priority = 1000,
+      opts = {},
+  }
   use {
       'nvim-telescope/telescope.nvim', tag = '0.1.5',
       -- or                            , branch = '0.1.x',
