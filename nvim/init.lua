@@ -1,2 +1,1 @@
 require("timon")
-print("initlua")
