@@ -7,6 +7,10 @@ target = "~/.gitconfig"
 source = "~/Documents/config/config/.tmux.conf"
 target = "~/.tmux.conf"
 
+[tool.tmux_tokyonight]
+source = "~/Documents/config/config/.tmux-tokyonight"
+target = "~/.tmux-tokyonight"
+
 [tool.tmux_cmd]
 source = "~/Documents/config/config/.tmux-cht-command"
 target = "~/.tmux-cht-command"
