@@ -99,11 +99,8 @@ eval "$(starship init zsh)"
 # bun completions
 [ -s "/home/timon/.bun/_bun" ] && source "/home/timon/.bun/_bun"
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# GO
+export PATH="$HOEM/.bun/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$PATH:/usr/local/go/bin"
 
 #tmux
