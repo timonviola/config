@@ -1,3 +1,4 @@
+-- PURE vim cmd remaps
 local nnoremap = require("timon.keymap").nnoremap
 
 nnoremap("<leader>pv", "<cmd>Ex<CR>")
@@ -8,13 +9,13 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- make cursor stay after line op
 --vim.keymap.set("n", "J", "mzJ`z")
 -- half page jumps
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-f>", "<C-j>zz")
--- keep cursor in meadle while search terms
+vim.keymap.set("n", "<C-j>", "<C-u>")
+vim.keymap.set("n", "<C-k>", "<C-d>")
+-- keep cursor in middle while search terms
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 -- keep void buffer after pasting over
 vim.keymap.set("x", "<leader>p", "\"_dP")
--- Navigate between quickfix items
-vim.keymap.set("n", "<leader>n", "<cmd>cnext<CR>zz", { desc = "Forward qfixlist" })
-vim.keymap.set("n", "<leader>N", "<cmd>cprev<CR>zz", { desc = "Backward qfixlist" })
+-- Navigate between quick fix items
+vim.keymap.set("n", "<leader>cn", "<cmd>cnext<CR>zz", { desc = "Forward qfixlist" })
+vim.keymap.set("n", "<leader>cN", "<cmd>cprev<CR>zz", { desc = "Backward qfixlist" })

@@ -1,7 +1,7 @@
 -- Learn the keybindings, see :help lsp-zero-keybindings
 -- Learn to configure LSP servers, see :help lsp-zero-api-showcase
 --
--- kudos to the primagen for giving me a good starting point
+-- https://lsp-zero.netlify.app/v3.x/language-server-configuration.html
 local lsp = require('lsp-zero')
 lsp.preset('recommended')
 
@@ -59,11 +59,6 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
   vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
-
-
-vim.diagnostic.config({
-    virtual_text = true
-})
 
 lsp.setup()
 
