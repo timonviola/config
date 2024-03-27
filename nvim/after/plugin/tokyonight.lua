@@ -1,9 +1,7 @@
---vim.g.tokyonight_transparent_sidebar = true
+print('plugin/tokyonight')
 vim.g.tokyonight_transparent = true
---vim.opt.background = "dark"
 
--- vim.cmd("colorscheme tokyonight-storm")
-local purple = "#9d7cd8"--"#ff9e64"
+local purple = "#9d7cd8"
 require("tokyonight").setup({
   -- your configuration comes here
   -- or leave it empty to use the default settings
@@ -49,4 +47,5 @@ require("tokyonight").setup({
   end,
 })
 
+-- finally register colorscheme
 vim.cmd[[colorscheme tokyonight]]

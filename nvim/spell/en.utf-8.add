@@ -4,3 +4,6 @@ vim
 LSP
 config
 timon
+Lua
+plugins
+init

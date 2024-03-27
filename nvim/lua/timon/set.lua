@@ -1,3 +1,4 @@
+print('set.lua')
 vim.g.loaded_matchparen = 1
 
 local opt = vim.opt
