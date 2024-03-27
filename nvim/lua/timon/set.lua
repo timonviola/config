@@ -77,4 +77,6 @@ vim.opt.colorcolumn = "80"
 vim.opt.updatetime = 50
 vim.opt.isfname:append("@-@")
 vim.opt.spell = true
+-- filetype specific settings in /after/ftp
+vim.cmd('filetype plugin on')
 
