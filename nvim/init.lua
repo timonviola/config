@@ -1,4 +1,3 @@
-print('init.lua')
 require("timon")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

@@ -1,6 +1,3 @@
-print('plugin/tokyonight')
-vim.g.tokyonight_transparent = true
-
 local purple = "#9d7cd8"
 require("tokyonight").setup({
   -- your configuration comes here
