@@ -42,6 +42,8 @@ require('mason-lspconfig').setup({
             python = {analysis = {autoSearchPaths = true,diagnosticMode = 'openFilesOnly',useLibraryCodeForTypes = true,typeCheckingMode = 'strict'}}
         })
     end,
+    -- PyRight and ruff might not play along very nicely, here is some discussion on that:
+    -- https://github.com/astral-sh/ruff-lsp/issues/177#issuecomment-1924924000
   }
 })
 
