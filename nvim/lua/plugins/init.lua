@@ -1,5 +1,3 @@
-print('plugins.lua')
-
 return {
     -- Packer can manage itself
     'williamboman/mason.nvim',
