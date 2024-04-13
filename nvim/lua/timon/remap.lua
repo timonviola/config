@@ -9,8 +9,8 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- make cursor stay after line op
 --vim.keymap.set("n", "J", "mzJ`z")
 -- half page jumps
-vim.keymap.set("n", "<C-j>", "<C-u>")
-vim.keymap.set("n", "<C-k>", "<C-d>")
+vim.keymap.set("n", "<C-k>", "<C-u>")
+vim.keymap.set("n", "<C-j>", "<C-d>")
 -- keep cursor in middle while search terms
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
