@@ -9,3 +9,16 @@ plugins
 init
 api
 lsp
+serializer
+kafka
+kwarg
+str
+dict
+JSONSchema
+AVRO
+Args
+KafkaLoggingHandler
+prem
+DAGs
+toml
+bool
