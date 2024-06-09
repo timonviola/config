@@ -1,10 +1,13 @@
+
+
+# ansible playbooks
+sudo apt install ansible to and run playbooks
+
+sudo ansible-playbook -i localhost pipx.yml
+
 ## Neovim
-Install packer from [github](https://github.com/wbthomason/packer.nvim#quickstart) with this:
-```sh
-git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-```
- Open vim, go to `/timon/packer.lua` and do a little `:so`
+I use lazy.nvim - it will bootstrap, or you just sync the packages first time
+you open nvim.
 
 
 

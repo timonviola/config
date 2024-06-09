@@ -1,0 +1,66 @@
+---
+- name: "install pipx"
+  hosts: localhost
+  gather_facts: true
+  tasks:
+    - name: is pipx installed 
+      shell: pipx --version 
+      ignore_errors: True
+      register: pipx_installed
+
+    - name: install pipx
+      when: pipx_installed is failed
+      ansible.builtin.apt:
+        name: "pipx"
+        state: present
+
+    - name: Add APT keys
+      apt_key:
+        url: "{{ item }}"
+      loop:
+        - "https://download.docker.com/linux/ubuntu/gpg"
+
+    - name: Add APT repositories
+      apt_repository:
+        repo: "{{ item }}"
+      loop:
+        - "deb [arch=amd64 trusted=yes] https://download.docker.com/linux/ubuntu focal stable"
+
+
+    - name: add nvim ppa
+      ansible.builtin.apt_repository:
+        repo: ppa:neovim-ppa/stable
+
+    - name: Install apt packages
+      apt:
+        pkg:
+        - curl
+        - git
+        - docker-ce
+        - docker-ce-cli
+        - docker-compose-plugin
+        - neovim
+        - python3-neovim
+        - xclip
+        - tmux
+
+    - name: Create docker and wireshark groups
+      group:
+        name: "{{ item }}"
+      loop:
+      - docker
+
+    - name: Add user to docker and wireshark groups
+      user:
+        name: "{{ lookup('env', 'USER') }}"
+        groups: "{{ item }}"
+        append: yes
+      loop:
+      - docker
+
+
+    - name: Enable and start service docker
+      service:
+        name: docker
+        enabled: yes
+        state: started
