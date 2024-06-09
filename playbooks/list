@@ -1,0 +1,3 @@
+zsh
+oh-my-zsh `chsh -s $(which zsh)`
+`starship curl -sS https://starship.rs/install.sh | sh` && `eval "$(starship init zsh)"`
