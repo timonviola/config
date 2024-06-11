@@ -34,6 +34,7 @@
     - name: Install apt packages
       apt:
         pkg:
+        - libssl-dev
         - curl
         - git
         - docker-ce
@@ -43,6 +44,9 @@
         - python3-neovim
         - xclip
         - tmux
+        - clang
+        - fuse
+        - libfuse2
 
     - name: Create docker and wireshark groups
       group:
