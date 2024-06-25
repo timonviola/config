@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# interactively delete git branches:
+#   tab/shift+tab to mark, unmark branches
+#   enter to delete marked branches
+
+git branch --no-color | fzf -m | xargs -I {} git branch -D '{}'

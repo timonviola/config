@@ -35,3 +35,7 @@ target = "~/.zshenv"
 [tool.zshrc]
 source = "~/Documents/config/config/.zshrc"
 target = "~/.zshrc"
+
+[tool.scripts_delete_git_branches]
+source = "~/Documents/config/config/scripts/delete_git_branches"
+target = "/usr/local/bin/delete_git_branches"
