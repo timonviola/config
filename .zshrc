@@ -105,4 +105,10 @@ export PATH="$PATH:/usr/local/go/bin"
 
 #tmux
 if [ "$TMUX" = "" ]; then tmux; fi
+# direnv config to start automagically:
+## ensure compatibility tmux <-> direnv
+#if [ -n "$TMUX" ] && [ -n "$DIRENV_DIR" ]; then
+#    unset -m "DIRENV_*"  # unset env vars starting with DIRENV_
+#fi
+#eval "$(direnv hook bash)"
 
