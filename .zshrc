@@ -46,7 +46,7 @@ fi
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(docker git aws)
+plugins=(docker git aws direnv)
 # MAC specific settings
 if [ "$(getos)" = Mac ]; then                                              
     plugins=(docker git aws)
@@ -101,6 +101,7 @@ eval "$(starship init zsh)"
 
 export PATH="$HOEM/.bun/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
 export PATH="$PATH:/usr/local/go/bin"
 
 #tmux
