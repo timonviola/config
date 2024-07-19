@@ -53,5 +53,7 @@ return {
     -- notifications
     'rcarriga/nvim-notify',
     'timonviola/easy-to-change.nvim',
+    'github/copilot.vim',
+    'tpope/vim-abolish',
 }
 
