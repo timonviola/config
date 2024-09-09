@@ -55,5 +55,11 @@ return {
     'timonviola/easy-to-change.nvim',
     'github/copilot.vim',
     'tpope/vim-abolish',
+    {
+        'lukas-reineke/indent-blankline.nvim',
+        config = function()
+            require("ibl").setup {}
+        end
+    },
 }
 
