@@ -104,8 +104,6 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$PATH:/usr/local/go/bin"
 
-#tmux
-if [ "$TMUX" = "" ]; then tmux; fi
 # direnv config to start automagically:
 ## ensure compatibility tmux <-> direnv
 #if [ -n "$TMUX" ] && [ -n "$DIRENV_DIR" ]; then
