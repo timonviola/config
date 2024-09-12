@@ -15,3 +15,6 @@ setlocal sts=2
 setlocal ts=2
 setlocal sw=2
 setlocal foldmethod=indent
+" no color column
+setlocal colorcolumn=
+setlocal foldcolumn=2
