@@ -15,6 +15,7 @@
     wl = worktree list
     wn = worktree add -b
     whoami = !echo "'\\033[0;32m'$(git config user.name)'\\033[0m' '\\033[1;30m'$(git config user.email)'\\033[0m'" 
+    lgn = !"git --no-pager log"
 
 [diff]
     tool = vscode
