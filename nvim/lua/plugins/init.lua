@@ -72,5 +72,12 @@ return {
       },
       -- See Commands section for default commands if you want to lazy load on them
     },
+    'tpope/vim-abolish',
+    {
+        'lukas-reineke/indent-blankline.nvim',
+        config = function()
+            require("ibl").setup {}
+        end
+    },
 }
 
