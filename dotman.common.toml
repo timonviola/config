@@ -23,6 +23,10 @@ target = "~/.tmux-cht-languages"
 source = "~/Documents/config/config/scripts/tmux-cht.sh"
 target = "~/.local/bin/tmux-cht.sh"
 
+[tool.scripts_session_switch]
+source = "~/Documents/config/config/scripts/switch"
+target = "~/.local/bin/switch"
+
 [tool.neovim]
 source = "~/Documents/config/config/nvim"
 target = "~/.config/nvim"

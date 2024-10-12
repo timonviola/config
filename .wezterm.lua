@@ -36,7 +36,7 @@ if is_linux() then
     config.font_size = 12
     config.line_height = 1.0
     config.enable_wayland = true
-    config.window_decorations = 'NONE'
+    config.window_decorations = 'RESIZE'
 end
 
 config.freetype_load_target = "Light"
@@ -103,8 +103,19 @@ config.keys = {
         mods = 'LEADER',
         action = wezterm.action.ActivatePaneDirection('Left'),
     },
+    -- Sessonizer-ish
+    {
+        key = 's',
+        mods = 'LEADER',
+        action = wezterm.action.SpawnCommandInNewTab {
+          args = { 'switch' },
+        },
+  },
 }
-
+--TODO: https://github.com/wez/wezterm/discussions/4796#discussioncomment-8354795
+-- More robust sessionizer functionality
+--local fd = "/home/timon/.local/bin/fd"
+--local rootPath = "/home/timon/Documents"
 
 local function segments_for_right_status(window)
     return {
