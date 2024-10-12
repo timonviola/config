@@ -1,0 +1,42 @@
+mode = "local"
+project = ""
+shell = ""
+
+[dirs]
+project = []
+python = "isolated"
+data = "/home/timon/.local/share/hatch"
+cache = "/home/timon/.cache/hatch"
+
+[dirs.env]
+virtual = ".hatch"
+
+[projects]
+lazy-kafka = "/home/timon/Documents/lazy-kafka/lazy-kafka"
+
+[publish.index]
+repo = "main"
+
+[template]
+name = "Timon Viola"
+email = "44016238+timonviola@users.noreply.github.com"
+
+[template.licenses]
+headers = true
+default = [
+    "MIT",
+]
+
+[template.plugins.default]
+tests = true
+ci = true
+src-layout = true
+
+[terminal.styles]
+info = "bold"
+success = "bold cyan"
+error = "bold red"
+warning = "bold yellow"
+waiting = "bold magenta"
+debug = "bold"
+spinner = "simpleDotsScrolling"
