@@ -36,6 +36,13 @@ target = "~/.zshenv"
 source = "~/Documents/config/config/.zshrc"
 target = "~/.zshrc"
 
+[tool.hatch]
+source = "~/Documents/config/config/hatch_config.toml"
+[target.unix]
+target = "$XDG_CONFIG_HOME/hatch"
+[target.macos]
+target = "~/Library/Application Support/hatch"
+
 [tool.scripts_delete_git_branches]
 source = "~/Documents/config/config/scripts/delete_git_branches"
 target = "/usr/local/bin/delete_git_branches"
