@@ -112,3 +112,5 @@ if [ "$TMUX" = "" ]; then tmux; fi
 #fi
 #eval "$(direnv hook bash)"
 
+
+export GPG_TTY=$(tty)
