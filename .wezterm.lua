@@ -18,17 +18,31 @@ local act = wezterm.action
 -- This will hold the configuration.
 local config = wezterm.config_builder()
 
--- This is where you actually apply your config choices
+--- Return True if HOME looks like as on Linux.
+local function is_linux()
+    return "/home/timon" == os.getenv("HOME")
+end
 
+
+-- This is where you actually apply your config choices
 -- Font
 config.font_size = 14
 config.font = wezterm.font 'FiraCode Nerd Font Mono'
 config.harfbuzz_features = {"zero" , "ss01", "cv05"}
 config.line_height = 1.1
+config.window_decorations = 'RESIZE'
+
+if is_linux() then
+    config.font_size = 12
+    config.line_height = 1.0
+    config.enable_wayland = true
+    config.window_decorations = 'NONE'
+end
+
+config.freetype_load_target = "Light"
 config.color_scheme = 'Tokyo Night'
 -- and finally, return the configuration to wezterm
 config.window_background_opacity = 0.75
-config.window_decorations = 'RESIZE'
 config.text_background_opacity = 0.3
 config.macos_window_background_blur = 8
 config.window_padding = {
