@@ -3,6 +3,7 @@
 [user]
     name = Timon Viola
     email = 44016238+timonviola@users.noreply.github.com
+	signingkey = CEE881D00C82B65B
 
 [alias]
 	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
@@ -24,3 +25,5 @@
 [includeIf "gitdir:~/work/"]
     path = .gitconfig-dfds
 
+[commit]
+	gpgsign = true
