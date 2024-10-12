@@ -113,3 +113,4 @@ export PATH="$PATH:/usr/local/go/bin"
 
 
 export GPG_TTY=$(tty)
+setopt COMBINING_CHARS
