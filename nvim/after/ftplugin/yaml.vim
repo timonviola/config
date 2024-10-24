@@ -18,3 +18,4 @@ setlocal foldmethod=indent
 " no color column
 setlocal colorcolumn=
 setlocal foldcolumn=2
+setlocal foldlevel=1
