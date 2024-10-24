@@ -30,7 +30,7 @@ config.font_size = 14
 config.font = wezterm.font 'FiraCode Nerd Font Mono'
 config.harfbuzz_features = {"zero" , "ss01", "cv05"}
 config.line_height = 1.0
-config.window_decorations = 'INTEGRATED_BUTTONS|RESIZE'
+config.window_decorations = 'RESIZE'
 
 if is_linux() then
     config.font_size = 12
@@ -121,7 +121,23 @@ config.keys = {
           args = { 'switch' },
         },
   },
+  {
+    key = 'r',
+    mods = 'LEADER',
+    action = act.PromptInputLine {
+      description = 'Enter new name for tab',
+      action = wezterm.action_callback(function(window, pane, line)
+        -- line will be `nil` if they hit escape without entering anything
+        -- An empty string if they just hit enter
+        -- Or the actual line of text they wrote
+        if line then
+          window:active_tab():set_title(line)
+        end
+      end),
+    },
+  },
 }
+
 --TODO: https://github.com/wez/wezterm/discussions/4796#discussioncomment-8354795
 -- More robust sessionizer functionality
 --local fd = "/home/timon/.local/bin/fd"
