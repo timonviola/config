@@ -29,8 +29,8 @@ end
 config.font_size = 14
 config.font = wezterm.font 'FiraCode Nerd Font Mono'
 config.harfbuzz_features = {"zero" , "ss01", "cv05"}
-config.line_height = 1.1
-config.window_decorations = 'RESIZE'
+config.line_height = 1.0
+config.window_decorations = 'INTEGRATED_BUTTONS|RESIZE'
 
 if is_linux() then
     config.font_size = 12
@@ -48,7 +48,7 @@ config.macos_window_background_blur = 8
 config.window_padding = {
     left = 20,
     right = 10,
-    top = 20,
+    top = 60,
     bottom = 10,
 }
 -- General
@@ -102,6 +102,16 @@ config.keys = {
         key = 'h',
         mods = 'LEADER',
         action = wezterm.action.ActivatePaneDirection('Left'),
+    },
+    {
+        key = 'n',
+        mods = 'LEADER',
+        action = wezterm.action.ActivateTabRelative(1),
+    },
+    {
+        key = 'p',
+        mods = 'LEADER',
+        action = wezterm.action.ActivateTabRelative(-1),
     },
     -- Sessonizer-ish
     {
@@ -177,5 +187,71 @@ wezterm.on('update-status', function(window, _)
 
     window:set_right_status(wezterm.format(elements))
 end)
+
+-- Tab bar settings
+config.tab_bar_at_bottom = true
+config.use_fancy_tab_bar = false
+config.show_new_tab_button_in_tab_bar = false
+config.hide_tab_bar_if_only_one_tab = true
+
+-- This function returns the suggested title for a tab.
+-- It prefers the title that was set via `tab:set_title()`
+-- or `wezterm cli set-tab-title`, but falls back to the
+-- title of the active pane in that tab.
+function tab_title(tab_info)
+  local title = tab_info.tab_title
+  -- if the tab title is explicitly set, take that
+  if title and #title > 0 then
+    return title
+  end
+  -- Otherwise, use the title from the active pane
+  -- in that tab
+  return tab_info.active_pane.title
+end
+
+wezterm.on(
+  'format-tab-title',
+  function(tab, tabs, panes, config, hover, max_width)
+
+    local color_scheme = tabs.window:effective_config().resolved_palette
+    -- Note the use of wezterm.color.parse here, this returns
+    -- a Color object, which comes with functionality for lightening
+    -- or darkening the colour (amongst other things).
+    local bg = wezterm.color.parse(color_scheme.background)
+    local fg = color_scheme.foreground
+    local edge_background = '#24283b'
+    local background = bg
+    local foreground = fg
+
+    if tab.is_active then
+      background = '#24283b'
+      foreground = '#c3e88d'
+    elseif hover then
+      background = color_scheme.selection_bg
+      foreground = color_scheme.selection_fg
+    end
+
+    local edge_foreground = background
+
+    local title = tab_title(tab)
+
+    -- ensure that the titles fit in the available space,
+    -- and that we have room for the edges.
+    title = wezterm.truncate_right(title, max_width - 2)
+
+    return {
+      { Background = { Color = edge_background } },
+      { Foreground = { Color = edge_foreground } },
+      { Text = ' |' },
+      { Background = { Color = background } },
+      { Foreground = { Color = foreground } },
+      { Text = title },
+      { Background = { Color = edge_background } },
+      { Foreground = { Color = edge_foreground } },
+      { Text = ' |' },
+    }
+  end
+)
+
 
 return config
