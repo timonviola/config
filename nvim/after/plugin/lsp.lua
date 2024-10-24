@@ -31,7 +31,7 @@ end)
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-    ensure_installed = { 'ts_ls', 'rust_analyzer', 'lua_ls', 'basedpyright' },
+    ensure_installed = { 'ts_ls', 'rust_analyzer', 'lua_ls', 'basedpyright', 'ruff_lsp' },
     handlers = {
         lsp_zero.default_setup,
         lua_ls = function()
@@ -41,7 +41,8 @@ require('mason-lspconfig').setup({
         pyright = function()
             require('lspconfig').basedpyright.setup({
                 autoImportCompletion = true,
-                python = { analysis = { autoSearchPaths = true, diagnosticMode = 'openFilesOnly', useLibraryCodeForTypes = true, typeCheckingMode = 'strict' } }
+                disableOrganizeImports = true,
+                python = { analysis = { autoSearchPaths = true, diagnosticMode = 'openFilesOnly', useLibraryCodeForTypes = true } }
             })
         end,
         -- PyRight and ruff might not play along very nicely, here is some discussion on that:
