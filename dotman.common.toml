@@ -44,6 +44,10 @@ target = "~/.zshrc"
 source = "~/Documents/config/config/hatch_config.toml"
 target = "$XDG_CONFIG_HOME/hatch"
 
+[tool.starship]
+source = "~/Documents/config/config/starship.toml"
+target = "~/.config/starship.toml"
+
 # TODO: feat: OS specific target
 #[target.unix]
 #target = "$XDG_CONFIG_HOME/hatch"
