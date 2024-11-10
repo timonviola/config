@@ -75,12 +75,12 @@ config.keys = {
     },
     {
         key = '%',
-        mods = 'LEADER',
+        mods = 'LEADER | SHIFT',
         action = act.SplitHorizontal { domain = 'CurrentPaneDomain' },
     },
     {
         key = '"',
-        mods = 'LEADER',
+        mods = 'LEADER | SHIFT',
         action = act.SplitVertical { domain = 'CurrentPaneDomain' },
     },
     {
