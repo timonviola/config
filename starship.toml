@@ -4,7 +4,7 @@
 # Inserts a blank line between shell prompts
 add_newline = true
 # Move the directory to the second line
-format = '$all🎃 $directory$character'
+format = '$all🎄 $directory$character'
 # Replace the '❯' symbol in the prompt with '➜'
 [character] # The name of the module we are configuring is 'character'
 success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
