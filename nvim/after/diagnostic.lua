@@ -89,3 +89,4 @@ vim.keymap.set('n', '<leader>tt', function()
   end
 end, {desc="Toggle inline diagnostics message", noremap = true, silent = true})
 
+vim.keymap.set('n', '<C-b>', '<Cmd>Neotree toggle<CR>')
