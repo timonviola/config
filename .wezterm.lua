@@ -42,7 +42,7 @@ end
 config.freetype_load_target = "Light"
 config.color_scheme = 'Tokyo Night'
 -- and finally, return the configuration to wezterm
-config.window_background_opacity = 0.75
+config.window_background_opacity = 0.95
 config.text_background_opacity = 0.3
 config.macos_window_background_blur = 8
 config.window_padding = {
