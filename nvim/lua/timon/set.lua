@@ -1,5 +1,7 @@
 vim.g.loaded_matchparen = 1
 
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 local opt = vim.opt
 
 -- Ignore compiled files
@@ -42,7 +44,6 @@ opt.mouse = "a"
 vim.opt.diffopt = { "internal", "filler", "closeoff", "hiddenoff", "algorithm:minimal" }
 
 vim.opt.signcolumn = "yes"
-vim.g.mapleader = " "
 
 vim.opt.guicursor = ""
 
