@@ -3,13 +3,14 @@ return {
     'williamboman/mason.nvim',
     {
         'folke/tokyonight.nvim',
-        lazy = false,
+        -- lazy = true,
         priority = 1000,
         opts = {},
     },
     { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
     {
         'nvim-telescope/telescope.nvim',
+        lazy = true,
         version = '0.1.5',
         dependencies = { { 'nvim-lua/plenary.nvim' } }
     },
@@ -27,19 +28,26 @@ return {
         'VonHeikemen/lsp-zero.nvim',
         dependencies = {
             -- LSP Support
-            'neovim/nvim-lspconfig',         -- Required
-            'williamboman/mason.nvim',       -- Optional
+            {
+                'neovim/nvim-lspconfig',
+                cmd = 'LspInfo',
+                event = { 'BufReadPre', 'BufNewFile' },
+                dependencies = {
+                    { 'hrsh7th/cmp-nvim-lsp' },
+                },
+            },
+            'williamboman/mason.nvim',           -- Optional
             'williamboman/mason-lspconfig.nvim', -- Optional
             -- Autocompletion
-            'hrsh7th/nvim-cmp',              -- Required
-            'hrsh7th/cmp-nvim-lsp',          -- Required
-            'hrsh7th/cmp-buffer',            -- Optional
-            'hrsh7th/cmp-path',              -- Optional
-            'saadparwaiz1/cmp_luasnip',      -- Optional
-            'hrsh7th/cmp-nvim-lua',          -- Optional
+            'hrsh7th/nvim-cmp',                  -- Required
+            'hrsh7th/cmp-nvim-lsp',              -- Required
+            'hrsh7th/cmp-buffer',                -- Optional
+            'hrsh7th/cmp-path',                  -- Optional
+            'saadparwaiz1/cmp_luasnip',          -- Optional
+            'hrsh7th/cmp-nvim-lua',              -- Optional
             -- Snippets
-            'L3MON4D3/LuaSnip',              -- Required
-            'rafamadriz/friendly-snippets',  -- Optional
+            'L3MON4D3/LuaSnip',                  -- Required
+            'rafamadriz/friendly-snippets',      -- Optional
         }
     },
     -- docstring generation https://github.com/danymat/neogen#installation
@@ -55,22 +63,16 @@ return {
     'timonviola/easy-to-change.nvim',
     {
         'zbirenbaum/copilot.lua',
-        config = function()
-            require('copilot').setup {}
-        end,
+        optional = true,
+        opts = {
+            filtetypes = { ["*"] = true },
+        },
     },
     {
-      "CopilotC-Nvim/CopilotChat.nvim",
-      branch = "canary",
-      dependencies = {
-        { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-        { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
-      },
-      opts = {
-        debug = true, -- Enable debugging
-        -- See Configuration section for rest
-      },
-      -- See Commands section for default commands if you want to lazy load on them
+        "CopilotC-Nvim/CopilotChat.nvim",
+        optional = true,
+        opts = { show_help = false },
+        -- See Commands section for default commands if you want to lazy load on them
     },
     'tpope/vim-abolish',
     {
@@ -79,5 +81,21 @@ return {
             require("ibl").setup {}
         end
     },
+    {
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v3.x",
+        dependencies = {
+          "nvim-lua/plenary.nvim",
+          "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+          "MunifTanjim/nui.nvim",
+          -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+        opts = {
+            filesystem = {
+                filtered_items = {
+                    hide_dotfiles = false,
+                },
+            },
+        },
+        }
+    }
 }
-
