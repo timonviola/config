@@ -1,4 +1,5 @@
 # NeoVim user config
+Credit: this config is inspired by folke's dotfiles https://github.com/folke/dot/ and kickstart nvim https://github.com/nvim-lua/kickstart.nvim/
 
 ## Structure
 .
