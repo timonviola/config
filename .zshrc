@@ -103,6 +103,7 @@ export PATH="$HOEM/.bun/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$PATH:/usr/local/go/bin"
+export PATH="$PATH:/opt/nvim-linux64/bin"
 
 # direnv config to start automagically:
 ## ensure compatibility tmux <-> direnv

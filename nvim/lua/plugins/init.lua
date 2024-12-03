@@ -3,6 +3,7 @@ return {
     -- 'nvim-treesitter/playground',
     'tpope/vim-abolish',
     -- fix: looks buggy 'timonviola/easy-to-change.nvim',
+    'timonviola/easy-to-change.nvim',
     {
         'zbirenbaum/copilot.lua',
         optional = true,
