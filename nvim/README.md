@@ -2,6 +2,7 @@
 Credit: this config is inspired by folke's dotfiles https://github.com/folke/dot/ and kickstart nvim https://github.com/nvim-lua/kickstart.nvim/
 
 ## Structure
+```
 .
 ├── README.md
 ├── after                         -- everything here is applied last, so these user configs will take precedence over the default ones
@@ -39,7 +40,7 @@ Credit: this config is inspired by folke's dotfiles https://github.com/folke/dot
     └── en.utf-8.sug
 
 9 directories, 26 files
-
+```
 ## Cheat Sheet
 ### Folding
 ```markdown
