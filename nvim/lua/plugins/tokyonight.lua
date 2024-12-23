@@ -6,9 +6,9 @@ return {
 
     local bg = "#011628"
     local bg_dark = "#011423"
-    local bg_highlight = "#143652"
+    local bg_highlight = "#a36b18"
     local bg_search = "#0A64AC"
-    local bg_visual = "#275378"
+    local bg_visual = "#82c3fa"
     local fg = "#CBE0F0"
     local fg_dark = "#B4D0E9"
     local fg_gutter = "#627E97"
@@ -37,9 +37,8 @@ return {
         colors.fg_float = fg
         colors.fg_gutter = fg_gutter
         colors.fg_sidebar = fg_dark
-      end,
+      end
     })
-
     vim.cmd("colorscheme tokyonight")
   end,
 }
