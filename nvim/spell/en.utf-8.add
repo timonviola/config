@@ -22,3 +22,4 @@ prem
 DAGs
 toml
 bool
+symlinks
