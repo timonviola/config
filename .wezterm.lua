@@ -39,8 +39,9 @@ if is_linux() then
     config.window_decorations = 'RESIZE'
 end
 
-config.freetype_load_target = "Light"
-config.color_scheme = 'Tokyo Night'
+-- config.freetype_load_target = "Light"
+--config.color_scheme = 'Tokyo Night'
+config.color_scheme = "Monokai Pro (Gogh)"
 -- and finally, return the configuration to wezterm
 config.window_background_opacity = 0.95
 config.text_background_opacity = 0.3
@@ -121,11 +122,12 @@ config.keys = {
           args = { 'switch' },
         },
   },
+    -- Rename tab
   {
     key = 'r',
     mods = 'LEADER',
     action = act.PromptInputLine {
-      description = 'Enter new name for tab',
+      description = 'New tab name:',
       action = wezterm.action_callback(function(window, pane, line)
         -- line will be `nil` if they hit escape without entering anything
         -- An empty string if they just hit enter
