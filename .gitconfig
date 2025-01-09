@@ -3,7 +3,6 @@
 [user]
     name = Timon Viola
     email = 44016238+timonviola@users.noreply.github.com
-    signingkey = CEE881D00C82B65B
 
 [alias]
     s = status
@@ -26,6 +25,6 @@
 	autoSetupRemote = true
 [includeIf "gitdir:~/work/"]
     path = .gitconfig-dfds
+[includeIf "gitdir:~/Documents/"]
+    path = .gitconfig-local
 
-[commit]
-	gpgsign = true
