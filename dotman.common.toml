@@ -27,6 +27,14 @@ target = "~/.local/bin/tmux-cht.sh"
 source = "~/Documents/config/config/scripts/switch"
 target = "~/.local/bin/switch"
 
+[tool.scripts_starship_toggle]
+source = "~/Documents/config/config/scripts/starship_toggle"
+target = "~/.local/bin/starship_toggle"
+
+[tool.starship_toggle_list]
+source = "~/Documents/config/config/.starship-modules"
+target = "~/.starship-modules"
+
 [tool.neovim]
 source = "~/Documents/config/config/nvim"
 target = "~/.config/nvim"
