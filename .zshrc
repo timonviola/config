@@ -78,6 +78,9 @@ if [ "$(getos)" = Mac ]; then
     source /Users/timon/work/airflow/dev/breeze/autocomplete/breeze-complete-zsh.sh
 fi
 
+if [ "$(getos)" = Linux ]; then                                              
+    export PATH="$PATH:/usr/local"
+fi
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
