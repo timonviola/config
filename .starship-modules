@@ -1,6 +1,6 @@
 aws
 kubernetes
-memory
+memory_usage
 python
 git_commit
 git_status
