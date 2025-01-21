@@ -75,7 +75,6 @@ if [ "$(getos)" = Mac ]; then
     export KUBECONFIG=~/.kube/hellman-saml.config
     export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
     export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-    source /Users/timon/work/airflow/dev/breeze/autocomplete/breeze-complete-zsh.sh
 fi
 
 if [ "$(getos)" = Linux ]; then                                              
@@ -86,13 +85,14 @@ fi
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# users are encouraged to define nliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim=nvim
+alias st=starship_toggle
 
 # oh-my-zsh
 source $ZSH/oh-my-zsh.sh

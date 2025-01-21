@@ -20,7 +20,7 @@ disabled = true
 format = "$symbol[${ram}( | ${swap})]($style) "
 threshold = 70
 style = "bold dimmed white"
-disabled = false
+disabled = true
 
 
 # Disable the package module, hiding it from the prompt completely
