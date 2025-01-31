@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# fuzzy over "HostName"s, but ignore it, if it's commented out
+# Consider spawning this with wezterm
+selected=$(rg --pcre2 -o -I --trim -e '(?<=(?<!#)HostName\s).*$' $HOME/.ssh/config | fzf)
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+ssh $selected

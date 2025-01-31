@@ -23,6 +23,10 @@ target = "~/.tmux-cht-languages"
 source = "~/Documents/config/config/scripts/tmux-cht.sh"
 target = "~/.local/bin/tmux-cht.sh"
 
+[tool.scripts_ssh_spawn]
+source = "~/Documents/config/config/scripts/ssh_spawn"
+target = "~/.local/bin/ssh_spawn"
+
 [tool.scripts_session_switch]
 source = "~/Documents/config/config/scripts/switch"
 target = "~/.local/bin/switch"

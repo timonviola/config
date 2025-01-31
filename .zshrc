@@ -93,6 +93,7 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim=nvim
 alias st=starship_toggle
+alias sp=ssh_spawn
 
 # oh-my-zsh
 source $ZSH/oh-my-zsh.sh
