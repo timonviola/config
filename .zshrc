@@ -95,6 +95,9 @@ alias vim=nvim
 alias st=starship_toggle
 alias sp=ssh_spawn
 
+# source custom functions
+. ~/.local/bin/switch
+
 # oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 # Use starship prompt
