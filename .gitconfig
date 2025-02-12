@@ -1,0 +1,29 @@
+[init]
+	defaultBranch = trunk
+[user]
+    name = Timon Viola
+
+[alias]
+    s = status
+	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	lg = !"git lg1"
+	lt = tag --sort version:refname -n9
+    ls = log --oneline --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' 
+    w = worktree
+    wl = worktree list
+    wn = worktree add -b
+    whoami = !echo "'\\033[0;32m'$(git config user.name)'\\033[0m' '\\033[1;30m'$(git config user.email)'\\033[0m'" 
+    lgn = !"git --no-pager log"
+
+[diff]
+	tool = vimdiff
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+[push]
+	autoSetupRemote = true
+[includeIf "gitdir:~/work/"]
+    path = .gitconfig-work
+[includeIf "gitdir:~/Documents/"]
+    path = .gitconfig-local
+
