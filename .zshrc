@@ -56,14 +56,32 @@ fi
 
 
 # User configuration
+#
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define nliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+alias vim=nvim
+alias st=starship_toggle
+alias sp=ssh_spawn
 # Autocopmletion for pipx in zsh
 autoload -Uz compinit
 compinit
+
 eval "$(register-python-argcomplete pipx)"
 # kubectl autocompletion
 if [ "$(getos)" = Mac ]; then                                              
     source <(kubectl completion zsh)
+    alias k=kubectl
+    compdef k='kubectl'
+
     source <(helm completion zsh)
+
+    source <(switcher init zsh)
+    alias kswitch=switcher
+    compdef kswitch='kubectl'
 fi
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -83,17 +101,6 @@ fi
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define nliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias vim=nvim
-alias st=starship_toggle
-alias sp=ssh_spawn
 
 # source custom functions
 . ~/.local/bin/dswitch
@@ -103,10 +110,6 @@ source $ZSH/oh-my-zsh.sh
 # Use starship prompt
 eval "$(starship init zsh)"
 
-# bun completions
-[ -s "/home/timon/.bun/_bun" ] && source "/home/timon/.bun/_bun"
-
-export PATH="$HOEM/.bun/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$PATH:/usr/local/go/bin"
