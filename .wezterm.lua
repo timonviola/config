@@ -28,7 +28,7 @@ end
 -- Font
 config.font_size = 14
 config.font = wezterm.font 'FiraCode Nerd Font Mono'
-config.harfbuzz_features = {"zero" , "ss01", "cv05"}
+config.harfbuzz_features = { "zero", "ss01", "cv05" }
 config.line_height = 1.0
 config.window_decorations = 'RESIZE'
 
