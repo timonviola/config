@@ -69,3 +69,8 @@ target = "~/.config/starship.toml"
 [tool.scripts_delete_git_branches]
 source = "~/Documents/config/config/scripts/delete_git_branches"
 target = "/usr/local/bin/delete_git_branches"
+
+[tool.kubeswitch]
+source = "~/Documents/config/config/kubeswitch.config.yaml"
+target = "~/.kube/switch-config.yaml"
+
