@@ -1,7 +1,8 @@
 -- PURE vim cmd remaps
 local nnoremap = require("timon.keymap").nnoremap
 
-nnoremap("<leader>pv", "<cmd>Ex<CR>")
+nnoremap("<leader>pv", "<cmd>30Ex<CR>")
+nnoremap("<leader>pV", "<cmd>30Vex<CR>")
 
 -- really cool visual line move
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")

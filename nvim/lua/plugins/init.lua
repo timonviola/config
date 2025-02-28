@@ -2,6 +2,7 @@ return {
     "nvim-lua/plenary.nvim", -- lua functions that many plugins use
     -- 'nvim-treesitter/playground',
     'tpope/vim-abolish',
+    'tpope/vim-vinegar',
     -- fix: looks buggy 'timonviola/easy-to-change.nvim',
     'timonviola/easy-to-change.nvim',
     {
