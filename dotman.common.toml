@@ -28,8 +28,8 @@ source = "~/Documents/config/config/scripts/ssh_spawn"
 target = "~/.local/bin/ssh_spawn"
 
 [tool.scripts_session_switch]
-source = "~/Documents/config/config/scripts/switch"
-target = "~/.local/bin/switch"
+source = "~/Documents/config/config/scripts/dswitch"
+target = "~/.local/bin/dswitch"
 
 [tool.scripts_starship_toggle]
 source = "~/Documents/config/config/scripts/starship_toggle"

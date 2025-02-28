@@ -96,7 +96,7 @@ alias st=starship_toggle
 alias sp=ssh_spawn
 
 # source custom functions
-. ~/.local/bin/switch
+. ~/.local/bin/dswitch
 
 # oh-my-zsh
 source $ZSH/oh-my-zsh.sh

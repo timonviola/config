@@ -15,3 +15,10 @@ you open nvim.
 copy mode set up for mac
 - <leader> + ] enters copy mode
 - use 'v' (vi) mode to select and 'y' to yank
+
+
+## dswitch
+directory switch - bash function, needs to be sourced from `zshrc`
+- script definition + function
+- dotman config
+- `zshrc` source

@@ -5,7 +5,7 @@
 # This script should not be ran directly, but sourced in .zshrc.
 #
 # Consider launching this from wezterm: https://wezfurlong.org/wezterm/config/lua/keyassignment/SpawnTab.html
-function switch() {
+function dswitch() {
     selected=$(find ~/Documents ~/work -mindepth 1 -maxdepth 1 -type d | fzf)
     if [[ -z $selected ]]; then
         exit 0
