@@ -41,15 +41,15 @@ end
 
 config.ssh_domains = wezterm.default_ssh_domains()
 for _, dom in ipairs(config.ssh_domains) do
-  dom.assume_shell = 'Posix'
+    dom.assume_shell = 'Posix'
 end
 -- config.freetype_load_target = "Light"
 --config.color_scheme = 'Tokyo Night'
-config.color_scheme = "Monokai Pro (Gogh)"
+config.color_scheme = 'Helios (base16)' -- "Monokai Pro (Gogh)"
 -- and finally, return the configuration to wezterm
 config.window_background_opacity = 0.95
 config.text_background_opacity = 0.3
-config.macos_window_background_blur = 8
+config.macos_window_background_blur = 30
 config.window_padding = {
     left = 20,
     right = 10,
@@ -69,39 +69,40 @@ config.keys = {
         action = act.ActivateCopyMode,
     },
     {
-    -- Work in progress
-      key = 'e',
-      mods = 'LEADER',
-      action = wezterm.action_callback(function(window, pane)
-        -- We're going to dynamically construct the list and then
-        -- show it.  Here we're just showing some numbers but you
-        -- could read or compute data from other sources
+        -- Work in progress
+        key = 'e',
+        mods = 'LEADER',
+        action = wezterm.action_callback(function(window, pane)
+            -- We're going to dynamically construct the list and then
+            -- show it.  Here we're just showing some numbers but you
+            -- could read or compute data from other sources
 
 
-        local domains = wezterm.default_ssh_domains()
-        local choices = {}
-        for _, dom in ipairs(domains) do
-          table.insert(choices, { label = tostring(dom.name)})
-        end
+            local domains = wezterm.default_ssh_domains()
+            local choices = {}
+            for _, dom in ipairs(domains) do
+                table.insert(choices, { label = tostring(dom.name) })
+            end
 
-        window:perform_action(
-          act.InputSelector {
-            action = wezterm.action_callback(function(window, pane, id, label)
-              if not id and not label then
-                wezterm.log_info 'cancelled'
-              else
-                wezterm.log_info('you selected ', id, label)
-                -- Since we didn't set an id in this example, we're
-                -- sending the label
-                wezterm.mux.spawn_window { domain = { DomainName = label} }              end
-            end),
-            title = 'I am title',
-            choices = choices,
-            alphabet = '123456789',
-            description = 'Write the number you want to choose or press / to search.',
-          },
-          pane
-        )
+            window:perform_action(
+                act.InputSelector {
+                    action = wezterm.action_callback(function(window, pane, id, label)
+                        if not id and not label then
+                            wezterm.log_info 'cancelled'
+                        else
+                            wezterm.log_info('you selected ', id, label)
+                            -- Since we didn't set an id in this example, we're
+                            -- sending the label
+                            wezterm.mux.spawn_window { domain = { DomainName = label } }
+                        end
+                    end),
+                    title = 'I am title',
+                    choices = choices,
+                    alphabet = '123456789',
+                    description = 'Write the number you want to choose or press / to search.',
+                },
+                pane
+            )
         end),
     },
     {
