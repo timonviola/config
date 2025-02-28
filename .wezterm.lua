@@ -156,29 +156,90 @@ config.keys = {
         action = wezterm.action.ActivateTabRelative(-1),
     },
     -- Sessonizer-ish
+    --    {
+    --        key = 's',
+    --        mods = 'LEADER',
+    --        action = wezterm.action.SpawnCommandInNewTab {
+    --            args = { 'switch' },
+    --        },
+    --    },
+    -- ssh-tab
+    -- note: maybe I should use the same command for switch and 'ssh_spawn"
+    --    {
+    --        -- g as "go"
+    --        key = 'g',
+    --        mods = 'LEADER',
+    --        action = wezterm.action.SpawnCommandInNewTab {
+    --          args = { 'ssh_spawn' },
+    --        },
+    --    },
+    -- Rename tab
+    {
+        key = 'r',
+        mods = 'LEADER',
+        action = act.PromptInputLine {
+            description = 'New tab name:',
+            action = wezterm.action_callback(function(window, pane, line)
+                -- line will be `nil` if they hit escape without entering anything
+                -- An empty string if they just hit enter
+                -- Or the actual line of text they wrote
+                if line then
+                    window:active_tab():set_title(line)
+                end
+            end),
+        },
+    },
+    -- Ref: https://mwop.net/blog/2024-07-04-how-i-use-wezterm.html
+    {
+        key = 'a',
+        mods = 'LEADER',
+        action = act.AttachDomain 'unix',
+    },
+
+    -- Detach from muxer
+    {
+        key = 'd',
+        mods = 'LEADER',
+        action = act.DetachDomain { DomainName = 'unix' },
+    },
+    {
+        key = '$',
+        mods = 'LEADER|SHIFT',
+        action = act.PromptInputLine {
+            description = 'Enter new name for session',
+            action = wezterm.action_callback(
+                function(window, pane, line)
+                    if line then
+                        wezterm.mux.rename_workspace(
+                            window:mux_window():get_workspace(),
+                            line
+                        )
+                    end
+                end
+            ),
+        },
+    },
     {
         key = 's',
         mods = 'LEADER',
-        action = wezterm.action.SpawnCommandInNewTab {
-          args = { 'switch' },
-        },
-  },
-    -- Rename tab
-  {
-    key = 'r',
-    mods = 'LEADER',
-    action = act.PromptInputLine {
-      description = 'New tab name:',
-      action = wezterm.action_callback(function(window, pane, line)
-        -- line will be `nil` if they hit escape without entering anything
-        -- An empty string if they just hit enter
-        -- Or the actual line of text they wrote
-        if line then
-          window:active_tab():set_title(line)
-        end
-      end),
+        action = act.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES' },
     },
-  },
+
+    {
+        key = 's',
+        mods = 'LEADER|SHIFT',
+        action = act({ EmitEvent = "save_session" }),
+    },
+    {
+        key = 'L',
+        mods = 'LEADER|SHIFT',
+        action = act({ EmitEvent = "load_session" }),
+    },
+    {
+        key = 'R',
+        mods = 'LEADER|SHIFT',
+        action = act({ EmitEvent = "restore_session" }),
+    },
 }
 
 --TODO: https://github.com/wez/wezterm/discussions/4796#discussioncomment-8354795
@@ -258,58 +319,83 @@ config.hide_tab_bar_if_only_one_tab = true
 -- or `wezterm cli set-tab-title`, but falls back to the
 -- title of the active pane in that tab.
 function tab_title(tab_info)
-  local title = tab_info.tab_title
-  -- if the tab title is explicitly set, take that
-  if title and #title > 0 then
-    return title
-  end
-  -- Otherwise, use the title from the active pane
-  -- in that tab
-  return tab_info.active_pane.title
+    local title = tab_info.tab_title
+    -- if the tab title is explicitly set, take that
+    if title and #title > 0 then
+        return title
+    end
+    -- Otherwise, use the title from the active pane
+    -- in that tab
+    return tab_info.active_pane.title
 end
 
 wezterm.on(
-  'format-tab-title',
-  function(tab, tabs, panes, config, hover, max_width)
+    'format-tab-title',
+    function(tab, tabs, panes, config, hover, max_width)
+        local color_scheme = tabs.window:effective_config().resolved_palette
+        -- Note the use of wezterm.color.parse here, this returns
+        -- a Color object, which comes with functionality for lightening
+        -- or darkening the colour (amongst other things).
+        local bg = wezterm.color.parse(color_scheme.background)
+        local fg = color_scheme.foreground
+        local edge_background = '#24283b'
+        local background = bg
+        local foreground = fg
 
-    local color_scheme = tabs.window:effective_config().resolved_palette
-    -- Note the use of wezterm.color.parse here, this returns
-    -- a Color object, which comes with functionality for lightening
-    -- or darkening the colour (amongst other things).
-    local bg = wezterm.color.parse(color_scheme.background)
-    local fg = color_scheme.foreground
-    local edge_background = '#24283b'
-    local background = bg
-    local foreground = fg
+        if tab.is_active then
+            background = '#24283b'
+            foreground = '#c3e88d'
+        elseif hover then
+            background = color_scheme.selection_bg
+            foreground = color_scheme.selection_fg
+        end
 
-    if tab.is_active then
-      background = '#24283b'
-      foreground = '#c3e88d'
-    elseif hover then
-      background = color_scheme.selection_bg
-      foreground = color_scheme.selection_fg
+        local edge_foreground = background
+
+        local title = tab_title(tab)
+
+        -- ensure that the titles fit in the available space,
+        -- and that we have room for the edges.
+        title = wezterm.truncate_right(title, max_width - 2)
+
+        return {
+            { Background = { Color = edge_background } },
+            { Foreground = { Color = edge_foreground } },
+            { Text = ' |' },
+            { Background = { Color = background } },
+            { Foreground = { Color = foreground } },
+            { Text = title },
+            { Background = { Color = edge_background } },
+            { Foreground = { Color = edge_foreground } },
+            { Text = ' |' },
+        }
     end
-
-    local edge_foreground = background
-
-    local title = tab_title(tab)
-
-    -- ensure that the titles fit in the available space,
-    -- and that we have room for the edges.
-    title = wezterm.truncate_right(title, max_width - 2)
-
-    return {
-      { Background = { Color = edge_background } },
-      { Foreground = { Color = edge_foreground } },
-      { Text = ' |' },
-      { Background = { Color = background } },
-      { Foreground = { Color = foreground } },
-      { Text = title },
-      { Background = { Color = edge_background } },
-      { Foreground = { Color = edge_foreground } },
-      { Text = ' |' },
-    }
-  end
 )
+-- Sessions
+config.unix_domains = {
+    {
+        name = 'unix',
+    },
+}
+
+-- Wezterm sessionizer
+local session_manager = require 'wezterm-session-manager/session-manager'
+wezterm.on("save_session", function(window) session_manager.save_state(window) end)
+wezterm.on("load_session", function(window) session_manager.load_state(window) end)
+wezterm.on("restore_session", function(window) session_manager.restore_state(window) end)
+
+-- Change opacity when I click away
+--wezterm.on('window-focus-changed', function(window, pane)
+--    local overrides = window:get_config_overrides() or {}
+--
+--    if window:is_focused() then
+--        overrides.window_background_opacity = 0.9
+--    else
+--        overrides.window_background_opacity = 1
+--    end
+--
+--    window:set_config_overrides(overrides)
+--end)
+
 
 return config
