@@ -80,7 +80,8 @@ if [ "$(getos)" = Mac ]; then
     source <(helm completion zsh)
 
     source <(switcher init zsh)
-    alias kswitch=switcher
+    # switch.sh script has to run the switcher binary...
+    alias kswitch=switch
     compdef kswitch='kubectl'
 fi
 
