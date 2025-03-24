@@ -29,3 +29,7 @@ require("lazy").setup({
   -- automatically check for plugin updates
   checker = { enabled = true, notify = false },
 })
+
+vim.api.nvim_set_hl(0, 'NormalNC', { fg = '#36374d' })
+-- vim.api.nvim_set_hl(0, 'StatusLineNC', { fg = '#36374d' })
+vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#326941' })
