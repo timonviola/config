@@ -2,9 +2,15 @@
 
 # fuzzy over "HostName"s, but ignore it, if it's commented out
 # Consider spawning this with wezterm
-selected=$(rg --pcre2 -o -I --trim -e '(?<=(?<!#)HostName\s).*$' $HOME/.ssh/config | fzf)
+# This is for the old ssh command
+#selected=$(rg --pcre2 -o -I --trim -e '(?<=(?<!#)HostName\s).*$' $HOME/.ssh/config | fzf)
+
+selected=$(rg --pcre2 -o -I --trim -e '(?<=(?<!#)Host\s).*$' $HOME/.ssh/config | fzf)
 if [[ -z $selected ]]; then
     exit 0
 fi
 
-ssh $selected
+# TODO: make this optional
+# wezterm cli spawn -- ssh $selected
+#wezterm cli spawn --domain-name "SSH:$selected"
+wezterm ssh "SSH:$selected"
