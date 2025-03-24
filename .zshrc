@@ -73,25 +73,22 @@ compinit
 eval "$(register-python-argcomplete pipx)"
 # kubectl autocompletion
 if [ "$(getos)" = Mac ]; then                                              
-    source <(kubectl completion zsh)
-    alias k=kubectl
-    compdef k='kubectl'
-
-    source <(helm completion zsh)
-
     source <(switcher init zsh)
     # switch.sh script has to run the switcher binary...
     alias kswitch=switch
-    compdef kswitch='kubectl'
+    compdef kswitch='switch'
 fi
 
+source <(kubectl completion zsh)
+alias k=kubectl
+compdef k='kubectl'
+source <(helm completion zsh)
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # MAC specific settings
 if [ "$(getos)" = Mac ]; then                                              
     export AWS_PROFILE=saml
     export HOMEBREW_NO_AUTO_UPDATE=1
-    export KUBECONFIG=~/.kube/hellman-saml.config
     export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
     export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 fi
@@ -102,10 +99,8 @@ fi
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-
 # source custom functions
 . ~/.local/bin/dswitch
-
 # oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 # Use starship prompt
@@ -126,3 +121,5 @@ export PATH="$PATH:/opt/nvim-linux64/bin"
 
 export GPG_TTY=$(tty)
 setopt COMBINING_CHARS
+export KUBECONFIG="$HOME/.kube/config/bika-config"
+. <(flux completion zsh)
