@@ -6,6 +6,15 @@ I use lazy.nvim - it will bootstrap, or you just sync the packages first time
 you open nvim.
 
 ## wezTerm
+### workspaces / sessionizer
+The workflow is:
+1. attach to UNIX domain
+2. load session
+
+To create new session:
+1. attach to UNIX domain
+2. create session
+3. save session
 
 
 ## Tmux
