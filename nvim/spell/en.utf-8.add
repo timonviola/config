@@ -27,3 +27,5 @@ JSON
 serializable
 mlflow
 username
+self/!
+DataTable

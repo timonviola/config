@@ -5,6 +5,7 @@ return {
     'tpope/vim-vinegar',
     -- fix: looks buggy 'timonviola/easy-to-change.nvim',
     'timonviola/easy-to-change.nvim',
+    'nvim-treesitter/nvim-treesitter-context',
     {
         'zbirenbaum/copilot.lua',
         optional = true,

@@ -6,4 +6,4 @@ kubeconfigStores:
     showPrefix: false
     kubeconfigName: "config*"
     paths:
-      - ~/.kube/config/
+      - ~/.kube/kswitch

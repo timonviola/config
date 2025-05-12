@@ -46,10 +46,10 @@ fi
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(docker git aws direnv)
+plugins=(git aws direnv)
 # MAC specific settings
 if [ "$(getos)" = Mac ]; then                                              
-    plugins=(docker git aws)
+    plugins=(git aws)
 else
     plugins=(git)
 fi
@@ -66,6 +66,9 @@ fi
 alias vim=nvim
 alias st=starship_toggle
 alias sp=ssh_spawn
+alias docker=podman
+alias pm=podman
+
 # Autocopmletion for pipx in zsh
 autoload -Uz compinit
 compinit
@@ -76,14 +79,13 @@ if [ "$(getos)" = Mac ]; then
     source <(switcher init zsh)
     # switch.sh script has to run the switcher binary...
     alias kswitch=switch
-    compdef kswitch='switch'
+    compdef kswitch='switcher'
 fi
 
 source <(kubectl completion zsh)
 alias k=kubectl
 compdef k='kubectl'
 source <(helm completion zsh)
-# export MANPATH="/usr/local/man:$MANPATH"
 
 # MAC specific settings
 if [ "$(getos)" = Mac ]; then                                              
