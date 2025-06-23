@@ -47,7 +47,7 @@ for _, dom in ipairs(config.ssh_domains) do
 end
 -- config.freetype_load_target = "Light"
 --config.color_scheme = 'Tokyo Night'
-config.color_scheme ='Brewer (base16)'-- "Monokai Pro (Gogh)"
+config.color_scheme ='Material (base16)' --'Brewer (base16)'
 -- config.window_background_gradient = {
 --   -- Can be "Vertical" or "Horizontal".  Specifies the direction
 --   -- in which the color gradient varies.  The default is "Horizontal",
@@ -103,9 +103,9 @@ config.window_background_opacity = 0.95
 config.text_background_opacity = 0.3
 config.macos_window_background_blur = 30
 config.window_padding = {
-    left = 20,
+    left = 10,
     right = 10,
-    top = 60,
+    top = 20,
     bottom = 10,
 }
 -- General
