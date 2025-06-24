@@ -60,6 +60,9 @@ target = "$XDG_CONFIG_HOME/hatch"
 source = "~/Documents/config/config/starship.toml"
 target = "~/.config/starship.toml"
 
+[tool.aerospace]
+source = "~/Documents/config/config/aerospace.toml"
+target = "~/.aerospace.toml"
 # TODO: feat: OS specific target
 #[target.unix]
 #target = "$XDG_CONFIG_HOME/hatch"
