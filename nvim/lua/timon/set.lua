@@ -80,4 +80,4 @@ vim.opt.isfname:append("@-@")
 vim.opt.spell = true
 -- filetype specific settings in /after/ftp
 vim.cmd('filetype plugin on')
-
+vim.g.netrw_preview = 01
