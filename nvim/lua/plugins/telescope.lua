@@ -1,7 +1,16 @@
 return {
     'nvim-telescope/telescope.nvim',
     version = '0.1.8',
-    dependencies = { 'nvim-lua/plenary.nvim', { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }, },
+    dependencies = { 
+        'nvim-lua/plenary.nvim',
+        {
+            'nvim-telescope/telescope-fzf-native.nvim',
+            build = 'make',
+            cond = function ()
+                return vim.fn.executable 'make' == 1
+            end,
+        },
+    },
     config = function()
         local telescope = require('telescope')
         telescope.setup({
@@ -19,6 +28,7 @@ return {
 
                     -- Exclude some patterns from search
                     "--glob=!**/.git/*",
+                    "--glob=!**/.devenv/*",
                     "--glob=!**/.idea/*",
                     "--glob=!**/.vscode/*",
                     "--glob=!**/build/*",
@@ -37,6 +47,7 @@ return {
                         "--files",
                         "--hidden",
                         "--glob=!**/.git/*",
+                        "--glob=!**/.devenv/*",
                         "--glob=!**/.idea/*",
                         "--glob=!**/.vscode/*",
                         "--glob=!**/build/*",
