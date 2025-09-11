@@ -43,6 +43,10 @@ target = "~/.starship-modules"
 source = "~/Documents/config/config/nvim"
 target = "~/.config/nvim"
 
+[tool.wezterm]
+source = "~/Documents/config/config/wezterm"
+target = "~/.config/wezterm"
+
 [tool.zshenv]
 source = "~/Documents/config/config/.zshenv"
 target = "~/.zshenv"
