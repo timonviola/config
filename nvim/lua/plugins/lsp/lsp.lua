@@ -80,6 +80,19 @@ return {
       end,
     })
 
+    -- Auto format on save using LSP native format()
+    vim.api.nvim_create_autocmd("BufWritePre", {
+        callback = function()
+            local mode = vim.api.nvim_get_mode().mode
+            local filetype = vim.bo.filetype
+            if vim.bo.modified == true and mode == 'n' then
+                vim.cmd('lua vim.lsp.buf.format()')
+            else
+            end
+        end
+    })
+
+
     -- used to enable autocompletion (assign to every lsp server config)
     local capabilities = cmp_nvim_lsp.default_capabilities()
 

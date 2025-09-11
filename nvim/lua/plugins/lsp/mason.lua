@@ -25,25 +25,43 @@ return {
         mason_lspconfig.setup({
             -- list of servers for mason to install
             ensure_installed = {
-                'ts_ls',
+                -- 'ts_ls',
                 'rust_analyzer',
                 'lua_ls',
                 'basedpyright',
                 'ruff'
             },
             handlers = {
---                lua_ls = function()
---                    require('lspconfig').lua_ls.setup()
---                end,
+                --                lua_ls = function()
+                --                    require('lspconfig').lua_ls.setup()
+                --                end,
                 pyright = function()
                     require('lspconfig').basedpyright.setup({
                         autoImportCompletion = true,
                         disableOrganizeImports = true,
-                        python = { analysis = { autoSearchPaths = true, diagnosticMode = 'openFilesOnly', useLibraryCodeForTypes = true } }
+                        python = {
+                            analysis = {
+                                autoSearchPaths = true,
+                                diagnosticMode = 'openFilesOnly',
+                                inlayHints = {
+                                    callArgumentNames = true
+                                }
+                            }
+                        }
                     })
                 end,
                 -- PyRight and ruff might not play along very nicely, here is some discussion on that:
                 -- https://github.com/astral-sh/ruff-lsp/issues/177#issuecomment-1924924000
+                ruff = function()
+                    vim.lsp.config('ruff', {
+                        init_options = {
+                            settings = {
+                                -- Ruff language server settings go here
+                            }
+                        }
+                    })
+                    vim.lsp.enable('ruff')
+                end,
             }
         })
     end,

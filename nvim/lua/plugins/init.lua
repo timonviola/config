@@ -22,7 +22,8 @@ return {
     {
         'lukas-reineke/indent-blankline.nvim',
         config = function()
-            require("ibl").setup {indent = { highlight = highlight, char = "│" }}
+            require("ibl").setup { indent = { highlight = highlight, char = "│" } }
         end
     },
+    { "catppuccin/nvim", name = "catppuccin" },
 }
