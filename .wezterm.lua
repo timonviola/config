@@ -15,7 +15,6 @@
 -- Pull in the wezterm API
 local wezterm = require 'wezterm'
 local act = wezterm.action
-require("resurrect")
 --
 -- This will hold the configuration.
 local config = wezterm.config_builder()
@@ -29,7 +28,7 @@ end
 -- This is where you actually apply your config choices
 -- Font
 config.font_size = 14
-config.font = wezterm.font 'FiraCode Nerd Font Mono'
+config.font = wezterm.font('GeistMono Nerd Font')
 config.harfbuzz_features = { "zero", "ss01", "cv05" }
 config.line_height = 1.0
 config.window_decorations = 'RESIZE'
@@ -47,7 +46,16 @@ for _, dom in ipairs(config.ssh_domains) do
 end
 -- config.freetype_load_target = "Light"
 --config.color_scheme = 'Tokyo Night'
-config.color_scheme ='Material (base16)' --'Brewer (base16)'
+-- config.color_scheme = 'rose-pine-moon' -- 'Material (base16)' --'Brewer (base16)'
+
+local file = io.open(wezterm.config_dir .. "/colorscheme", "r")
+
+if file then
+    config.color_scheme = file:read("*a")
+    file:close()
+else
+    config.color_scheme = "Tokyo Night Day"
+end
 -- config.window_background_gradient = {
 --   -- Can be "Vertical" or "Horizontal".  Specifies the direction
 --   -- in which the color gradient varies.  The default is "Horizontal",
@@ -55,7 +63,7 @@ config.color_scheme ='Material (base16)' --'Brewer (base16)'
 --   -- Linear and Radial gradients are also supported; see the other
 --   -- examples below
 --   orientation = 'Vertical',
--- 
+--
 --   -- Specifies the set of colors that are interpolated in the gradient.
 --   -- Accepts CSS style color specs, from named colors, through rgb
 --   -- strings and more
@@ -64,22 +72,22 @@ config.color_scheme ='Material (base16)' --'Brewer (base16)'
 --     '#302b63',
 --     '#004032',
 --   },
--- 
+--
 --   -- Instead of specifying `colors`, you can use one of a number of
 --   -- predefined, preset gradients.
 --   -- A list of presets is shown in a section below.
 --   -- preset = "Warm",
--- 
+--
 --   -- Specifies the interpolation style to be used.
 --   -- "Linear", "Basis" and "CatmullRom" as supported.
 --   -- The default is "Linear".
 --   interpolation = 'Linear',
--- 
+--
 --   -- How the colors are blended in the gradient.
 --   -- "Rgb", "LinearRgb", "Hsv" and "Oklab" are supported.
 --   -- The default is "Rgb".
 --   blend = 'Rgb',
--- 
+--
 --   -- To avoid vertical color banding for horizontal gradients, the
 --   -- gradient position is randomly shifted by up to the `noise` value
 --   -- for each pixel.
@@ -87,14 +95,14 @@ config.color_scheme ='Material (base16)' --'Brewer (base16)'
 --   -- The default value is 64 which gives decent looking results
 --   -- on a retina macbook pro display.
 --   -- noise = 64,
--- 
+--
 --   -- By default, the gradient smoothly transitions between the colors.
 --   -- You can adjust the sharpness by specifying the segment_size and
 --   -- segment_smoothness parameters.
 --   -- segment_size configures how many segments are present.
 --   -- segment_smoothness is how hard the edge is; 0.0 is a hard edge,
 --   -- 1.0 is a soft edge.
--- 
+--
 --   -- segment_size = 11,
 --   -- segment_smoothness = 0.0,
 -- }
@@ -393,7 +401,7 @@ end
 --         local edge_background = '#24283b'
 --         local background = bg
 --         local foreground = fg
--- 
+--
 --         if tab.is_active then
 --             background = '#24283b'
 --             foreground = '#c3e88d'
@@ -401,15 +409,15 @@ end
 --             background = color_scheme.selection_bg
 --             foreground = color_scheme.selection_fg
 --         end
--- 
+--
 --         local edge_foreground = background
--- 
+--
 --         local title = tab_title(tab)
--- 
+--
 --         -- ensure that the titles fit in the available space,
 --         -- and that we have room for the edges.
 --         title = wezterm.truncate_right(title, max_width - 2)
--- 
+--
 --         return {
 --             { Background = { Color = edge_background } },
 --             { Foreground = { Color = edge_foreground } },
@@ -431,40 +439,40 @@ config.unix_domains = {
 }
 
 local function get_current_working_dir(tab)
-  local current_dir = tab.active_pane and tab.active_pane.current_working_dir or { file_path = "" }
-  local HOME_DIR = string.format("file://%s", os.getenv("HOME"))
+    local current_dir = tab.active_pane and tab.active_pane.current_working_dir or { file_path = "" }
+    local HOME_DIR = string.format("file://%s", os.getenv("HOME"))
 
-  return current_dir == HOME_DIR and "." or string.gsub(current_dir.file_path, "(.*[/\\])(.*)", "%2")
+    return current_dir == HOME_DIR and "." or string.gsub(current_dir.file_path, "(.*[/\\])(.*)", "%2")
 end
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-  local has_unseen_output = false
-  if not tab.is_active then
-    for _, pane in ipairs(tab.panes) do
-      if pane.has_unseen_output then
-        has_unseen_output = true
-        break
-      end
+    local has_unseen_output = false
+    if not tab.is_active then
+        for _, pane in ipairs(tab.panes) do
+            if pane.has_unseen_output then
+                has_unseen_output = true
+                break
+            end
+        end
     end
-  end
 
-  local cwd = wezterm.format({
-    { Attribute = { Intensity = "Bold" } },
-    { Text = get_current_working_dir(tab) },
-  })
+    local cwd = wezterm.format({
+        { Attribute = { Intensity = "Bold" } },
+        { Text = get_current_working_dir(tab) },
+    })
 
-  local title = string.format(" [%s] %s", tab.tab_index + 1, cwd)
+    local title = string.format(" [%s] %s", tab.tab_index + 1, cwd)
 
-  if has_unseen_output then
+    if has_unseen_output then
+        return {
+            { Foreground = { Color = "#8866bb" } },
+            { Text = title },
+        }
+    end
+
     return {
-      { Foreground = { Color = "#8866bb" } },
-      { Text = title },
+        { Text = title },
     }
-  end
-
-  return {
-    { Text = title },
-  }
 end)
 -- Change opacity when I click away
 --wezterm.on('window-focus-changed', function(window, pane)
