@@ -56,10 +56,6 @@ target = "~/.zshenv"
 source = "~/Documents/config/config/.zshrc"
 target = "~/.zshrc"
 
-[tool.hatch]
-source = "~/Documents/config/config/hatch_config.toml"
-target = "$XDG_CONFIG_HOME/hatch"
-
 [tool.starship]
 source = "~/Documents/config/config/starship.toml"
 target = "~/.config/starship.toml"
