@@ -5,7 +5,15 @@ return {
     'tpope/vim-vinegar',
     -- fix: looks buggy 'timonviola/easy-to-change.nvim',
     'timonviola/easy-to-change.nvim',
-    'nvim-treesitter/nvim-treesitter-context',
+    {
+        'nvim-treesitter/nvim-treesitter-context',
+        config = function()
+            require("treesitter-context").setup {
+                enable = true,
+                max_lines = 1
+            }
+        end,
+    },
     {
         'zbirenbaum/copilot.lua',
         optional = true,
