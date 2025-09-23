@@ -28,7 +28,8 @@ end
 -- This is where you actually apply your config choices
 -- Font
 config.font_size = 14
-config.font = wezterm.font('GeistMono Nerd Font')
+
+config.font = wezterm.font('GeistMono Nerd Font', { weight = "Medium" })
 config.harfbuzz_features = { "zero", "ss01", "cv05" }
 config.line_height = 1.0
 config.window_decorations = 'RESIZE'
