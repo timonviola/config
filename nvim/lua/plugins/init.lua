@@ -4,7 +4,18 @@ return {
     'tpope/vim-abolish',
     'tpope/vim-vinegar',
     -- fix: looks buggy 'timonviola/easy-to-change.nvim',
-    'timonviola/easy-to-change.nvim',
+    {
+        'timonviola/easy-to-change.nvim',
+        config = function()
+            require("etc").setup()
+        end
+    },
+    {
+        'timonviola/terraform-doc-browser.nvim',
+        config = function()
+            require("terraform-doc-browser").setup()
+        end
+    },
     {
         'nvim-treesitter/nvim-treesitter-context',
         config = function()
