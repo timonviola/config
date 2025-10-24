@@ -29,3 +29,5 @@
 
 [credential]
 	helper = osxkeychain
+[core]
+	pager = less -F -X
