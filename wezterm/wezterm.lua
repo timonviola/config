@@ -27,7 +27,7 @@ end
 
 -- This is where you actually apply your config choices
 -- Font
-config.font_size = 14
+config.font_size = 12
 
 config.font = wezterm.font('GeistMono Nerd Font', { weight = "Medium" })
 config.harfbuzz_features = { "zero", "ss01", "cv05" }
@@ -123,6 +123,19 @@ config.native_macos_fullscreen_mode = false
 config.leader = { key = 'b', mods = 'CTRL', timeout_milliseconds = 1000 }
 config.debug_key_events = true
 config.keys = {
+    {
+        key = 'LeftArrow',
+        mods = 'OPT',
+        action = act.SendKey {
+            key = 'b',
+            mods = 'ALT',
+        },
+    },
+    {
+        key = 'RightArrow',
+        mods = 'OPT',
+        action = act.SendKey { key = 'f', mods = 'ALT' },
+    },
     -- Send "CTRL-A" to the terminal when pressing CTRL-A, CTRL-A
     {
         key = '[',
