@@ -492,13 +492,23 @@ end)
 --- Leader Active Indicator
 --- Reference: https://github.com/dragonlobster/wezterm-config/blob/0aea12642cf06411046074a9ea7ff76a6a1bbccf/wezterm.lua#L298
 wezterm.on("update-right-status", function(window, _)
-    local bell_icon = utf8.char(0x1F438)
     local color_scheme = window:effective_config().resolved_palette
+    local bg = wezterm.color.parse(color_scheme.background)
+    local fg = color_scheme.foreground
+    local name = window:active_key_table()
+    if name == 'copy_mode' then
+        local bell_icon = utf8.char(0x1F42A)
+        window:set_left_status(wezterm.format {
+            { Background = { Color = "#eba834" } },
+            { Text = " " .. bell_icon },
+            { Foreground = { Color = fg } },
+        })
+        return
+    end
+    local bell_icon = utf8.char(0x1F438)
     -- Note the use of wezterm.color.parse here, this returns
     -- a Color object, which comes with functionality for lightening
     -- or darkening the colour (amongst other things).
-    local bg = wezterm.color.parse(color_scheme.background)
-    local fg = color_scheme.foreground
     local prefix = ""
     local left_filler = ""
 
