@@ -48,3 +48,4 @@ return {
 --vim.api.nvim_set_hl(0, 'LineNrAbove', { fg = '#717aa3' })
 --vim.api.nvim_set_hl(0, 'LineNr', { fg='yellow' })
 --vim.api.nvim_set_hl(0, 'LineNrBelow', { fg = '#717aa3' })
+--# vim.api.nvim_set_hl(0, "DiagnosticUnnecessary", { link = "DiagnosticUnnecessary" }) when unused code is too dark
