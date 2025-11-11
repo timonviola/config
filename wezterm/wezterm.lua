@@ -118,7 +118,6 @@ config.window_padding = {
     bottom = 10,
 }
 -- General
---config.enable_tab_bar = false
 config.native_macos_fullscreen_mode = false
 config.leader = { key = 'b', mods = 'CTRL', timeout_milliseconds = 1000 }
 config.debug_key_events = true
@@ -218,6 +217,26 @@ config.keys = {
         key = 'h',
         mods = 'LEADER',
         action = wezterm.action.ActivatePaneDirection('Left'),
+    },
+    {
+        mods = "LEADER",
+        key = "LeftArrow",
+        action = wezterm.action.AdjustPaneSize { "Left", 5 }
+    },
+    {
+        mods = "LEADER",
+        key = "RightArrow",
+        action = wezterm.action.AdjustPaneSize { "Right", 5 }
+    },
+    {
+        mods = "LEADER",
+        key = "DownArrow",
+        action = wezterm.action.AdjustPaneSize { "Down", 5 }
+    },
+    {
+        mods = "LEADER",
+        key = "UpArrow",
+        action = wezterm.action.AdjustPaneSize { "Up", 5 }
     },
     {
         key = 'n',
@@ -387,7 +406,18 @@ config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
 config.show_new_tab_button_in_tab_bar = false
 config.hide_tab_bar_if_only_one_tab = true
+config.tab_and_split_indices_are_zero_based = true
 
+--- Keybindings for tabs 0-9
+--- important to set tab_and_split_indices_are_zero_based = true
+for i = 0, 9 do
+    -- leader + number to activate that tab
+    table.insert(config.keys, {
+        key = tostring(i),
+        mods = "LEADER",
+        action = wezterm.action.ActivateTab(i),
+    })
+end
 -- This function returns the suggested title for a tab.
 -- It prefers the title that was set via `tab:set_title()`
 -- or `wezterm cli set-tab-title`, but falls back to the
@@ -403,49 +433,7 @@ function tab_title(tab_info)
     return tab_info.active_pane.title
 end
 
--- wezterm.on(
---     'format-tab-title',
---     function(tab, tabs, panes, config, hover, max_width)
---         local color_scheme = tabs.window:effective_config().resolved_palette
---         -- Note the use of wezterm.color.parse here, this returns
---         -- a Color object, which comes with functionality for lightening
---         -- or darkening the colour (amongst other things).
---         local bg = wezterm.color.parse(color_scheme.background)
---         local fg = color_scheme.foreground
---         local edge_background = '#24283b'
---         local background = bg
---         local foreground = fg
---
---         if tab.is_active then
---             background = '#24283b'
---             foreground = '#c3e88d'
---         elseif hover then
---             background = color_scheme.selection_bg
---             foreground = color_scheme.selection_fg
---         end
---
---         local edge_foreground = background
---
---         local title = tab_title(tab)
---
---         -- ensure that the titles fit in the available space,
---         -- and that we have room for the edges.
---         title = wezterm.truncate_right(title, max_width - 2)
---
---         return {
---             { Background = { Color = edge_background } },
---             { Foreground = { Color = edge_foreground } },
---             { Text = ' |' },
---             { Background = { Color = background } },
---             { Foreground = { Color = foreground } },
---             { Text = title },
---             { Background = { Color = edge_background } },
---             { Foreground = { Color = edge_foreground } },
---             { Text = ' |' },
---         }
---     end
--- )
--- Sessions
+--- Sessions
 config.unix_domains = {
     {
         name = 'unix',
@@ -458,7 +446,7 @@ local function get_current_working_dir(tab)
 
     return current_dir == HOME_DIR and "." or string.gsub(current_dir.file_path, "(.*[/\\])(.*)", "%2")
 end
-
+--- tab title format
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
     local has_unseen_output = false
     if not tab.is_active then
@@ -501,5 +489,33 @@ end)
 --    window:set_config_overrides(overrides)
 --end)
 
+--- Leader Active Indicator
+--- Reference: https://github.com/dragonlobster/wezterm-config/blob/0aea12642cf06411046074a9ea7ff76a6a1bbccf/wezterm.lua#L298
+wezterm.on("update-right-status", function(window, _)
+    local bell_icon = utf8.char(0x1F438)
+    local color_scheme = window:effective_config().resolved_palette
+    -- Note the use of wezterm.color.parse here, this returns
+    -- a Color object, which comes with functionality for lightening
+    -- or darkening the colour (amongst other things).
+    local bg = wezterm.color.parse(color_scheme.background)
+    local fg = color_scheme.foreground
+    local prefix = ""
+    local left_filler = ""
+
+    if window:leader_is_active() then
+        prefix = " " .. bell_icon
+        left_filler = ""
+    else
+        prefix = " "
+        left_filler = "  "
+    end
+
+    window:set_left_status(wezterm.format {
+        { Background = { Color = bg } },
+        { Text = prefix },
+        { Foreground = { Color = fg } },
+        { Text = left_filler }
+    })
+end)
 
 return config
