@@ -1,5 +1,21 @@
 local M = {}
 
+local MAP_COLORSCHEMES_NVIM_TO_WEZTERM = {
+    -- <nvim name> = <wezterm name>
+    ["tokyonight-day"] = "Tokyo Night Day",
+    ["tokyonight-storm"] = "Tokyo Night Storm",
+    ["tokyonight-night"] = "Tokyo Night",
+    ["catppuccin-frappe"] = "Catppuccin Frappe",
+    ["catppuccin-latte"] = "Catppuccin Latte",
+    ["catppuccin-macchiato"] = "Catppuccin Macchiato",
+    ["catppuccin-mocha"] = "Catppuccin Mocha",
+    ["gruvbox"] = "GruvboxDark",
+    ["rose-pine"] = "rose-pine",
+    ["rose-pine-main"] = "rose-pine",
+    ["rose-pine-dawn"] = "rose-pine-dawn",
+    ["rose-pine-moon"] = "rose-pine-moon",
+    -- add more color schemes here ...
+}
 --vim.api.nvim_create_autocmd("ColorSchemePre", {
 --    group = au_group,
 --    callback = function(args)
@@ -27,24 +43,8 @@ function M.setup()
     vim.api.nvim_create_autocmd("ColorScheme", {
         group = au_group,
         callback = function(args)
-            local colorschemes = {
-                -- <nvim name> = <wezterm name>
-                ["tokyonight-day"] = "Tokyo Night Day",
-                ["tokyonight-storm"] = "Tokyo Night Storm",
-                ["tokyonight-night"] = "Tokyo Night",
-                ["catppuccin-frappe"] = "Catppuccin Frappe",
-                ["catppuccin-latte"] = "Catppuccin Latte",
-                ["catppuccin-macchiato"] = "Catppuccin Macchiato",
-                ["catppuccin-mocha"] = "Catppuccin Mocha",
-                ["gruvbox"] = "GruvboxDark",
-                ["rose-pine"] = "rose-pine",
-                ["rose-pine-main"] = "rose-pine",
-                ["rose-pine-dawn"] = "rose-pine-dawn",
-                ["rose-pine-moon"] = "rose-pine-moon",
-                -- add more color schemes here ...
-            }
             local new_colorscheme = args.match
-            local colorscheme = colorschemes[args.match]
+            local colorscheme = MAP_COLORSCHEMES_NVIM_TO_WEZTERM[args.match]
             if not colorscheme then
                 return
             end
