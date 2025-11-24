@@ -83,3 +83,5 @@ vim.g.netrw_preview = 01
 
 -- Statusline is green
 vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#326941' })
+--- border for floating windows
+vim.opt.winborder = "rounded"
