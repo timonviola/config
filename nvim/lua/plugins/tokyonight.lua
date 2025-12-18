@@ -39,9 +39,9 @@ return {
                 colors.fg_sidebar = fg_dark
             end,
             on_highlights = function(hl)
-                hl.comment = { bg = "#000000", fg = "#f33fbc" }
-                hl.perlComment = { bg = "#000000", fg = "#f33fbc" }
-                hl.Comment = { bg = "#000000", fg = "#f33fbc" }
+                hl.comment = { bg = "#000000", fg = "#518a50" }
+                hl.perlComment = { bg = "#000000", fg = "#518a50" }
+                hl.Comment = { bg = "#000000", fg = "#518a50" }
             end,
         })
         -- vim.cmd("colorscheme tokyonight")

@@ -66,11 +66,12 @@ return {
                 },
                 inactive_sections = {
                     lualine_b = {},
-                    lualine_c = { { 'filename', path = 1 } ,
-                    lualine_x = { 'location' },
-                },
-                tabline = {
-                    lualine_b = { 'branch' },
+                    lualine_c = { { 'filename', path = 1 },
+                        lualine_x = { 'location' },
+                    },
+                    tabline = {
+                        lualine_b = { 'branch' },
+                    }
                 }
             }
         end
