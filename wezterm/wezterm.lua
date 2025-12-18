@@ -29,9 +29,10 @@ end
 -- Font
 config.font_size = 12
 
-config.font = wezterm.font('GeistMono Nerd Font', { weight = "Medium" })
+config.font = wezterm.font('GeistMono Nerd Font Mono', { weight = "DemiBold" })
 config.harfbuzz_features = { "zero", "ss01", "cv05" }
 config.line_height = 1.0
+config.cell_width = 0.95
 config.window_decorations = 'RESIZE'
 
 if is_linux() then
