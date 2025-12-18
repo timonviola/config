@@ -43,7 +43,7 @@ vim.notify(colorscheme, vim.log.levels.INFO)
 file:close()
 vim.cmd("colorscheme " .. colorscheme)
 
--- vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#326941' })
-vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#03fc7b' })
-require('timon.statusline').setup()
+-- Currently disable my statusline to try https://github.com/nvim-lualine/lualine.nvim
+-- vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#03fc7b' })
+-- require('timon.statusline').setup()
 require('timon.wezterm_colorscheme_sync').setup()

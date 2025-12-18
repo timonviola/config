@@ -2,7 +2,7 @@ return {
     "folke/tokyonight.nvim",
     priority = 1000,
     config = function()
-        local transparent = true -- set to true if you would like to enable transparency
+        local transparent = false -- set to true if you would like to enable transparency
 
         local bg = "#011628"
         local bg_dark = "#011423"
@@ -37,7 +37,12 @@ return {
                 colors.fg_float = fg
                 colors.fg_gutter = fg_gutter
                 colors.fg_sidebar = fg_dark
-            end
+            end,
+            on_highlights = function(hl)
+                hl.comment = { bg = "#000000", fg = "#f33fbc" }
+                hl.perlComment = { bg = "#000000", fg = "#f33fbc" }
+                hl.Comment = { bg = "#000000", fg = "#f33fbc" }
+            end,
         })
         -- vim.cmd("colorscheme tokyonight")
     end,
