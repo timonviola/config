@@ -59,18 +59,17 @@ return {
                 sections = {
                     lualine_a = {},
                     lualine_b = {},
-                    lualine_c = { { 'filename', path = 1 } },
+                    lualine_c = { { 'filename', { path = 1 } } },
                     lualine_x = { 'filetype' },
                     lualine_y = { 'progress' },
                     lualine_z = { 'location', 'mode' },
                 },
                 inactive_sections = {
                     lualine_b = {},
-                    lualine_c = { { 'filename', path = 1 },
-                        lualine_x = { 'location' },
-                    },
+                    lualine_c = { { 'filename', { path = 1 } } },
+                    lualine_x = { 'location' },
                     tabline = {
-                        lualine_b = { 'branch' },
+                        { lualine_b = { 'branch' } },
                     }
                 }
             }
