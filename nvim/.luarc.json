@@ -2,12 +2,19 @@
   "runtime.version": "LuaJIT",
   "runtime.path": [
     "lua/?.lua",
-    "lua/?/init.lua"
+    "lua/?/init.lua",
+    "${3rd}/luv/library"
   ],
-  "diagnostics.globals": ["vim"],
+  "diagnostics.globals": [
+    "vim"
+  ],
   "workspace.checkThirdParty": false,
   "workspace.library": [
     "$VIMRUNTIME",
+    "${3rd}/luv/library",
+    "${3rd}/busted/library",
     "./lua"
-  ]
+  ],
+  "workspace.maxPreload": 100000,
+  "workspace.preloadFileSize": 10000
 }
