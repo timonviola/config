@@ -194,3 +194,7 @@ automatically-unhide-macos-hidden-apps = false
     check-further-callbacks = true
     run = ['layout floating', 'move-node-to-workspace A']
 
+
+[[on-window-detected]]
+  if.app-id = '/Applications/Element.app/Contents/MacOS/Element'
+  run = "move-node-to-workspace U"
