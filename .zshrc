@@ -66,7 +66,6 @@ fi
 alias vim=nvim
 alias st=starship_toggle
 alias sp=ssh_spawn
-alias docker=podman
 alias pm=podman
 
 # Autocopmletion for pipx in zsh
@@ -89,11 +88,13 @@ source <(helm completion zsh)
 
 # MAC specific settings
 if [ "$(getos)" = Mac ]; then                                              
-    export AWS_PROFILE=saml
     export HOMEBREW_NO_AUTO_UPDATE=1
     export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
     export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 fi
+
+# rust
+. "$HOME/.cargo/env"
 
 if [ "$(getos)" = Linux ]; then                                              
     export PATH="$PATH:/usr/local"
@@ -113,15 +114,10 @@ export PATH="$HOME/go/bin:$PATH"
 export PATH="$PATH:/usr/local/go/bin"
 export PATH="$PATH:/opt/nvim-linux64/bin"
 
-# direnv config to start automagically:
-## ensure compatibility tmux <-> direnv
-#if [ -n "$TMUX" ] && [ -n "$DIRENV_DIR" ]; then
-#    unset -m "DIRENV_*"  # unset env vars starting with DIRENV_
-#fi
-#eval "$(direnv hook bash)"
-
-
 export GPG_TTY=$(tty)
 setopt COMBINING_CHARS
 export KUBECONFIG="$HOME/.kube/config/bika-config"
 . <(flux completion zsh)
+
+eval "$(direnv hook zsh)"
+
