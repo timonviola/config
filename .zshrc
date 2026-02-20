@@ -64,6 +64,7 @@ fi
 #
 # Example aliases
 alias vim=nvim
+alias vimg='nvim +Git +only'
 alias st=starship_toggle
 alias sp=ssh_spawn
 alias pm=podman
