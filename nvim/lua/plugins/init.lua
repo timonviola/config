@@ -3,7 +3,7 @@ return {
     -- 'nvim-treesitter/playground',
     'tpope/vim-abolish',
     'tpope/vim-vinegar',
-    -- fix: looks buggy 'timonviola/easy-to-change.nvim',
+    'timonviola/easy-to-change.nvim',
     {
         'timonviola/easy-to-change.nvim',
         config = function()
