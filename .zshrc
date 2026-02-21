@@ -73,20 +73,6 @@ alias pm=podman
 autoload -Uz compinit
 compinit
 
-eval "$(register-python-argcomplete pipx)"
-# kubectl autocompletion
-if [ "$(getos)" = Mac ]; then                                              
-    source <(switcher init zsh)
-    # switch.sh script has to run the switcher binary...
-    alias kswitch=switch
-    compdef kswitch='switcher'
-fi
-
-source <(kubectl completion zsh)
-alias k=kubectl
-compdef k='kubectl'
-source <(helm completion zsh)
-
 # MAC specific settings
 if [ "$(getos)" = Mac ]; then                                              
     export HOMEBREW_NO_AUTO_UPDATE=1
@@ -118,7 +104,6 @@ export PATH="$PATH:/opt/nvim-linux64/bin"
 export GPG_TTY=$(tty)
 setopt COMBINING_CHARS
 export KUBECONFIG="$HOME/.kube/config/bika-config"
-. <(flux completion zsh)
 
 eval "$(direnv hook zsh)"
 
