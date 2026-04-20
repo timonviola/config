@@ -26,8 +26,8 @@ return {
         mason_lspconfig.setup({
             -- list of servers for mason to install
             ensure_installed = {
-                'harper_ls',
-                'rust_analyzer',
+                -- 'harper_ls',
+                -- rust_analyzer is managed by rustaceanvim
                 'lua_ls',
                 'basedpyright',
                 'ruff'

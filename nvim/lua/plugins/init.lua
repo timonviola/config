@@ -25,19 +25,19 @@ return {
             }
         end,
     },
-    {
-        'zbirenbaum/copilot.lua',
-        optional = true,
-        opts = {
-            filtetypes = { ["*"] = true },
-        },
-    },
-    {
-        "CopilotC-Nvim/CopilotChat.nvim",
-        optional = true,
-        opts = { show_help = false },
-        -- See Commands section for default commands if you want to lazy load on them
-    },
+    --    {
+    --        'zbirenbaum/copilot.lua',
+    --        optional = true,
+    --        opts = {
+    --            filtetypes = { ["*"] = true },
+    --        },
+    --    },
+    --    {
+    --        "CopilotC-Nvim/CopilotChat.nvim",
+    --        optional = true,
+    --        opts = { show_help = false },
+    --        -- See Commands section for default commands if you want to lazy load on them
+    --    },
     {
         'lukas-reineke/indent-blankline.nvim',
         config = function()
