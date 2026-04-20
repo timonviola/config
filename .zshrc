@@ -106,4 +106,4 @@ setopt COMBINING_CHARS
 export KUBECONFIG="$HOME/.kube/config/bika-config"
 
 eval "$(direnv hook zsh)"
-
+export EZA_CONFIG_DIR=/Users/timon/eza
