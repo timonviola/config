@@ -180,10 +180,18 @@ automatically-unhide-macos-hidden-apps = false
 [[on-window-detected]]
   if.app-id = 'org.mozzilla.firefox'
   run = "move-node-to-workspace A"
+  if.during-aerospace-startup = true
 
 [[on-window-detected]]
-  if.app-id = 'org.mozilla.thunderbird'
-  run = "move-node-to-workspace T"
+  if.app-id = 'com.apple.iCal'
+  run = "move-node-to-workspace A"
+  if.during-aerospace-startup = true
+
+[[on-window-detected]]
+  if.app-id = 'md.obsidian'
+  run = "move-node-to-workspace O"
+  if.during-aerospace-startup = true
+
 # Floating windows
 [[on-window-detected]]
     if.app-id = 'com.apple.systempreferences'
@@ -194,7 +202,6 @@ automatically-unhide-macos-hidden-apps = false
     check-further-callbacks = true
     run = ['layout floating', 'move-node-to-workspace A']
 
-
 [[on-window-detected]]
-  if.app-id = '/Applications/Element.app/Contents/MacOS/Element'
+  if.app-id = 'im.riot.app'
   run = "move-node-to-workspace U"
