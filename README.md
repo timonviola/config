@@ -37,3 +37,14 @@ directory switch - bash function, needs to be sourced from `zshrc`
 sudo apt install ansible to and run playbooks
 
 sudo ansible-playbook -i localhost pipx.yml
+
+## Git
+Example .gitconfig-overrides
+```
+[user]
+    name = 
+    email =
+    signkey =
+[commit]
+    gpgsign = true
+```
