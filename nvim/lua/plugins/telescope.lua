@@ -35,6 +35,9 @@ return {
                     "--glob=!**/dist/*",
                     "--glob=!**/yarn.lock",
                     "--glob=!**/package-lock.json",
+                    -- Scala/SBT specific ignores
+                    "--glob=!**/target/*",
+                    "--glob=!**/project/*",
                 },
             },
             pickers = {
