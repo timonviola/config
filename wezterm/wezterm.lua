@@ -132,6 +132,11 @@ config.keys = {
         },
     },
     {
+        key = 't',
+        mods = 'LEADER',
+        action = act.SpawnTab 'CurrentPaneDomain',
+    },
+    {
         key = 'RightArrow',
         mods = 'OPT',
         action = act.SendKey { key = 'f', mods = 'ALT' },
