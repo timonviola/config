@@ -61,7 +61,7 @@ vim.opt.smartindent = true
 vim.opt.wrap = false
 
 
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undodir = vim.fn.stdpath("state") .. "/undodir"
 vim.opt.undofile = true
 
 
@@ -80,8 +80,11 @@ vim.opt.spell = true
 -- filetype specific settings in /after/ftp
 vim.cmd('filetype plugin on')
 vim.g.netrw_preview = 01
+-- set tree view the default
+vim.g.netrw_liststyle= 3
 
 -- Statusline is green
 vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#326941' })
 --- border for floating windows
 vim.opt.winborder = "rounded"
+

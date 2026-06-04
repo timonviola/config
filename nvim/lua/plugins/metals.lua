@@ -7,7 +7,7 @@
 -- 3. configure DAP keymap
 -- 4. configure metals with `setup_dap`
 local configure_dap = function()
-    print("configure_dap")
+    vim.notify("configure_dap")
     -- nvim-dap
     -- I only use nvim-dap with Scala, so we keep it all in here
     local dap = require("dap")
@@ -114,7 +114,8 @@ return {
         local metals_config = require("metals").bare_config()
 
         metals_config.settings = {
-            serverVersion = "1.6.7",
+            -- serverVersion = "1.6.7",
+            serverVersion = "latest.snapshot",
             defaultBspToBuildTool = true,
             enableSemanticHighlighting = false,
             inlayHints = {
@@ -139,7 +140,7 @@ return {
         }
 
         -- Example if you are using cmp how to make sure the correct capabilities for snippets are set
-        metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
+        -- metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
 
         metals_config.on_attach = function(client, bufnr)
             require("metals").setup_dap()

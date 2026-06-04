@@ -15,6 +15,11 @@ return {
         local telescope = require('telescope')
         telescope.setup({
             defaults = {
+                file_ignore_patterns = {
+
+                 "**/project/**",
+                 "**/target/**" ,
+                },
                 -- configure to use ripgrep
                 vimgrep_arguments = {
                     "rg",
@@ -36,8 +41,8 @@ return {
                     "--glob=!**/yarn.lock",
                     "--glob=!**/package-lock.json",
                     -- Scala/SBT specific ignores
-                    "--glob=!**/target/*",
-                    "--glob=!**/project/*",
+                    "--glob=!target/*",
+                    "--glob=!project/*",
                 },
             },
             pickers = {
@@ -57,6 +62,9 @@ return {
                         "--glob=!**/dist/*",
                         "--glob=!**/yarn.lock",
                         "--glob=!**/package-lock.json",
+                        -- Scala/SBT specific ignores
+                        "--glob=!target/*",
+                        "--glob=!project/*",
                     },
                 },
             },

@@ -1,3 +1,4 @@
+-- Helpers for remaps
 local M = {}
 
 local function bind(op, outer_opts)

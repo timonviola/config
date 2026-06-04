@@ -1,6 +1,7 @@
--- define keymaps, leader etc.
+-- All my personal remaps are in 'timon'
 require("timon")
 
+-- Lazy.nvim bootstrapping
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
     local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -17,33 +18,23 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- require("lazy").setup('plugins')
 require("lazy").setup({
     spec = {
-        -- import your plugins
-        { { import = "plugins" }, { import = "plugins.lsp" } },
+        { { import = "plugins" } },
     },
-    -- Configure any other settings here. See the documentation for more details.
-    -- colorscheme that will be used when installing plugins.
     install = { colorscheme = { "habamax" } },
-    -- automatically check for plugin updates
     checker = { enabled = true, notify = false },
 })
 
---vim.api.nvim_set_hl(0, 'NormalNC', { fg = '#6b6d8f' })
---vim.api.nvim_set_hl(0, 'NormalNC', { fg = '#36374d' })
--- vim.api.nvim_set_hl(0, 'StatusLineNC', { fg = '#36374d' })
-local nvim_filename = vim.fn.stdpath("state") .. "/colorscheme"
--- local filename = "/Users/timon/.config/nvim/colorscheme"
-assert(type(nvim_filename) == "string")
-local file = io.open(nvim_filename, "r")
-assert(file)
-local colorscheme = file:read("*l")
-vim.notify(colorscheme, vim.log.levels.INFO)
-file:close()
-vim.cmd("colorscheme " .. colorscheme)
+-- After setup
+require('lsp').setup()
 
--- Currently disable my statusline to try https://github.com/nvim-lualine/lualine.nvim
--- vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#03fc7b' })
--- require('timon.statusline').setup()
-require('timon.wezterm_colorscheme_sync').setup()
+-- vim.opt.statusline = [[%!luaeval('require("statusline").setup()')]]
+
+-- my custom remaps for plugins (e.g. telescope), vim native remaps are under
+-- 'timon'
+require("myremaps")
+-- sync colorscheme with wezterm
+require("wezterm_colorscheme_sync").setup()
+
+

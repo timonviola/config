@@ -20,3 +20,5 @@ vim.keymap.set("x", "<leader>p", "\"_dP")
 -- Navigate between quick fix items
 vim.keymap.set("n", "<leader>cn", "<cmd>cnext<CR>zz", { desc = "Forward qfixlist" })
 vim.keymap.set("n", "<leader>cN", "<cmd>cprev<CR>zz", { desc = "Backward qfixlist" })
+-- easy esc
+vim.keymap.set("i", "jj", "<ESC>")
