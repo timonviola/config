@@ -8,8 +8,7 @@
 function dswitch() {
     selected=$(find ~/Documents ~/work -mindepth 1 -maxdepth 1 -type d | fzf)
     if [[ -z $selected ]]; then
-        exit 0
+        return 0
     fi
-
     cd $selected
 }
