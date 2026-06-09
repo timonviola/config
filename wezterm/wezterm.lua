@@ -339,6 +339,35 @@ config.keys = {
         mods = 'LEADER|SHIFT',
         action = act({ EmitEvent = "restore_session" }),
     },
+    -- Lately I am having some problem with clipboard sinking between the OS clipboard and wezterm
+    -- had no issue with tmux+pbcopy and
+    -- since Nvim prioritizes pbcopy, there is a good chance this will workout.
+    -- https://neo.vimhelp.org/provider.txt.html#provider-clipboard%20clipboard
+    {
+        key = 'c',
+        mods = 'CMD',
+        action = wezterm.action_callback(function(window, pane)
+            local sel = window:get_selection_text_for_pane(pane) or ''
+            if sel ~= '' then
+                local p = io.popen('pbcopy', 'w')
+                p:write(sel)
+                p:close()
+            end
+        end),
+    },
+    -- Optional: Cmd+Shift+V to paste (same behavior)
+    {
+        key = 'v',
+        mods = 'CMD',
+        action = wezterm.action_callback(function(window, pane)
+            local handle = io.popen('pbpaste', 'r')
+            local text = handle:read('*a') or ''
+            handle:close()
+            if text ~= '' then
+                window:perform_action(wezterm.action.SendString(text), pane)
+            end
+        end),
+    },
 }
 
 --TODO: https://github.com/wez/wezterm/discussions/4796#discussioncomment-8354795
