@@ -22,11 +22,11 @@ return {
         },
         extensions = {
             fzf = {
-              fuzzy = true,                    -- false will only do exact matching
-              override_generic_sorter = true,  -- override the generic sorter
-              override_file_sorter = true,     -- override the file sorter
-              case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                               -- the default case_mode is "smart_case"
+                fuzzy = true,                   -- false will only do exact matching
+                override_generic_sorter = true, -- override the generic sorter
+                override_file_sorter = true,    -- override the file sorter
+                case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
+                -- the default case_mode is "smart_case"
             }
         },
         config = function()
@@ -41,27 +41,31 @@ return {
                         preview_cutoff = 120,
                     },
                     file_ignore_patterns = {
-                         "^project/",
-                         "^target/" ,
+                        "^project/",
+                        "^target/",
                     },
                 }
             }
         end
     },
-  { "hrsh7th/cmp-nvim-lsp", lazy = true },
-  { "hrsh7th/cmp-path", lazy = true },
-  { "hrsh7th/cmp-buffer", lazy = true },
-  { "hrsh7th/cmp-omni", lazy = true },
-  { "hrsh7th/cmp-cmdline", lazy = true },
-  { "quangnguyen30192/cmp-nvim-ultisnips", lazy = true },
-  {
-    "hrsh7th/nvim-cmp",
-    name = "nvim-cmp",
-    event = "VeryLazy",
-    config = function()
-      require("plugins.config.nvim-cmp")
-    end,
-  },
+    { "hrsh7th/cmp-nvim-lsp", lazy = true },
+    { "hrsh7th/cmp-path",     lazy = true },
+    { "hrsh7th/cmp-buffer",   lazy = true },
+    { "hrsh7th/cmp-omni",     lazy = true },
+    { "hrsh7th/cmp-cmdline",  lazy = true },
+    {
+        "quangnguyen30192/cmp-nvim-ultisnips",
+        lazy = true,
+        dependencies = { 'sirver/ultisnips' }
+    },
+    {
+        "hrsh7th/nvim-cmp",
+        name = "nvim-cmp",
+        event = "VeryLazy",
+        config = function()
+            require("plugins.config.nvim-cmp")
+        end,
+    },
     {
         'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -93,17 +97,17 @@ return {
         end
     },
     {
-      'windwp/nvim-autopairs',
-      event = "InsertEnter",
-      config = true
-      -- use opts = {} for passing setup options
-      -- this is equivalent to setup({}) function
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        config = true
+        -- use opts = {} for passing setup options
+        -- this is equivalent to setup({}) function
     },
     {
-      "neovim/nvim-lspconfig",
-      config = function()
-        require("plugins.config.lsp")
-      end,
+        "neovim/nvim-lspconfig",
+        config = function()
+            require("plugins.config.lsp")
+        end,
     },
     {
         'nvim-treesitter/nvim-treesitter-context',
@@ -122,26 +126,26 @@ return {
     },
 
     {
-    'rcarriga/nvim-notify',
+        'rcarriga/nvim-notify',
         config = function()
             require("notify").setup({
-        })
-    end,
-},
+            })
+        end,
+    },
 
-{
-    'mrcjkb/rustaceanvim',
-    version = '^6', -- Recommended
-    lazy = false, -- This plugin is already lazy
-},
-{
-    'mbbill/undotree',
-    config = function()
-        vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
-    end,
-},
-  -- allows me to open netrw with '-'
-  -- and makes netwr easier for me
+    {
+        'mrcjkb/rustaceanvim',
+        version = '^6', -- Recommended
+        lazy = false,   -- This plugin is already lazy
+    },
+    {
+        'mbbill/undotree',
+        config = function()
+            vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+        end,
+    },
+    -- allows me to open netrw with '-'
+    -- and makes netwr easier for me
     --:help vinegar
-'tpope/vim-vinegar',
+    'tpope/vim-vinegar',
 }
