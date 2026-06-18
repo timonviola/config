@@ -30,7 +30,9 @@ return {
                 -- rust_analyzer is managed by rustaceanvim
                 'lua_ls',
                 'basedpyright',
-                'ruff'
+                'ruff',
+                'helm_ls',
+                'yamlls',
             },
         })
     end,

@@ -119,6 +119,15 @@ return {
         end,
     },
     {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        config = function()
+            require("treesitter-context").setup {
+                enable = true,
+                max_lines = 1
+            }
+        end,
+    },
+    {
         'tpope/vim-fugitive',
         config = function()
             vim.keymap.set("n", "<leader>gs", vim.cmd.Git);
@@ -148,4 +157,56 @@ return {
     -- and makes netwr easier for me
     --:help vinegar
     'tpope/vim-vinegar',
+    {
+        "qvalentin/helm-ls.nvim",
+        ft = "helm",
+        opts = {
+            conceal_templates = {
+                -- enable the replacement of templates with virtual text of their current values
+                enabled = true, -- tree-sitter must be setup for this feature
+            },
+            indent_hints = {
+                -- enable hints for indent and nindent functions
+                enabled = true, -- tree-sitter must be setup for this feature
+            },
+        },
+    },
+    {
+        "rebelot/kanagawa.nvim",
+        lazy = false,
+        priority = 1000,
+        config = function()
+            require("kanagawa").setup({
+                colors = {
+                    theme = {
+                        all = {
+                            ui = {
+                                bg_gutter = "none",
+                            },
+                        },
+                    },
+                },
+            })
+
+            vim.cmd.colorscheme("kanagawa")
+            local kanagawa_colors = require("kanagawa.colors").setup()
+
+            vim.cmd(string.format([[hi! StatusLine guifg=%s guibg=%s]], kanagawa_colors.palette.fujiWhite,
+                kanagawa_colors.palette.sumiInk3))
+
+            vim.cmd([[hi! link StatusLineNC Comment]])
+            vim.cmd([[hi! link StatusError DiagnosticError]])
+            vim.cmd([[hi! link StatusWarn DiagnosticWarn]])
+            vim.cmd([[hi! link WinSeparator Comment]])
+
+            local kanagawa_group = vim.api.nvim_create_augroup("kanagawa", { clear = true })
+            vim.api.nvim_create_autocmd("TextYankPost", {
+                pattern = "*",
+                callback = function()
+                    vim.highlight.on_yank()
+                end,
+                group = kanagawa_group,
+            })
+        end
+    },
 }

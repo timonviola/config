@@ -23,6 +23,7 @@ local MAP_COLORSCHEMES_NVIM_TO_WEZTERM = {
     ["rose-pine-main"] = "rose-pine",
     ["rose-pine-dawn"] = "rose-pine-dawn",
     ["rose-pine-moon"] = "rose-pine-moon",
+    ["kanagawa"] = "Kanagawa (Gogh)",
     -- add more color schemes here ...
 }
 --vim.api.nvim_create_autocmd("ColorSchemePre", {

@@ -1,4 +1,3 @@
-require("timon.set")
 require("timon.remap")
 
 vim.g.loaded_matchparen = 1
@@ -29,62 +28,40 @@ set_cursorline("WinLeave", false)
 set_cursorline("WinEnter", true)
 set_cursorline("FileType", false, "TelescopePrompt")
 
-opt.foldmethod = "marker"
-opt.foldlevel = 0
-opt.modelines = 1
-
 opt.belloff = "all" -- Just turn the dang bell off
-
 opt.clipboard = "unnamedplus"
-
+opt.foldlevel = 0
+opt.foldmethod = "marker"
 opt.inccommand = "split"
-opt.swapfile = false -- Living on the edge
-opt.shada = { "!", "'1000", "<50", "s10", "h" }
-
+opt.modelines = 1
 opt.mouse = "a"
-
+opt.shada = { "!", "'1000", "<50", "s10", "h" }
+opt.swapfile = false                                     -- Living on the edge
+vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#326941' }) -- Statusline is green
+vim.cmd('filetype plugin on')                            -- filetype specific settings in /after/ftp
+vim.g.netrw_liststyle = 3                                -- make tree view the default
+vim.g.netrw_preview = 1                                  -- make vertical splitting the default
+vim.g.netrw_winsize = 30                                 -- make window size 30% the default
+vim.opt.colorcolumn = "80"
 vim.opt.diffopt = { "internal", "filler", "closeoff", "hiddenoff", "algorithm:minimal" }
-
-vim.opt.signcolumn = "yes"
-
-vim.opt.guicursor = ""
-
-
-vim.opt.nu = true
-vim.opt.relativenumber = true
-
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
-vim.opt.incsearch = true
-
-vim.opt.smartindent = true
-
-vim.opt.wrap = false
-
-
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
-vim.opt.undofile = true
-
-
+vim.opt.guicursor = ""
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
-
-vim.opt.termguicolors = true
-
--- vim.signcolumn = "yes"
-
-vim.opt.scrolloff = 8
-vim.opt.colorcolumn = "80"
-vim.opt.updatetime = 50
+vim.opt.incsearch = true
 vim.opt.isfname:append("@-@")
+vim.opt.nu = true
+vim.opt.relativenumber = true
+vim.opt.scrolloff = 8
+vim.opt.shiftwidth = 4
+vim.opt.signcolumn = "yes"
+vim.opt.smartindent = true
+vim.opt.softtabstop = 4
 vim.opt.spell = true
--- filetype specific settings in /after/ftp
-vim.cmd('filetype plugin on')
-vim.g.netrw_preview = 01
-
--- Statusline is green
-vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#326941' })
---- border for floating windows
-vim.opt.winborder = "rounded"
+vim.opt.tabstop = 4
+vim.opt.termguicolors = true
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undofile = true
+vim.opt.updatetime = 50
+vim.opt.winborder = "rounded" -- border for floating windows
+vim.opt.wrap = false
