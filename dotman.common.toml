@@ -31,6 +31,14 @@ target = "~/.local/bin/ssh_spawn"
 source = "~/Documents/config/config/scripts/dswitch"
 target = "~/.local/bin/dswitch"
 
+[tool.scripts_aws_context_switch]
+source = "~/Documents/config/config/scripts/aswitch"
+target = "~/.local/bin/aswitch"
+
+[tool.scripts_kubernetes_context_switch]
+source = "~/Documents/config/config/scripts/cswitch"
+target = "~/.local/bin/cswitch"
+
 [tool.scripts_starship_toggle]
 source = "~/Documents/config/config/scripts/starship_toggle"
 target = "~/.local/bin/starship_toggle"
@@ -72,8 +80,4 @@ target = "~/.aerospace.toml"
 [tool.scripts_delete_git_branches]
 source = "~/Documents/config/config/scripts/delete_git_branches"
 target = "~/.local/bin/delete_git_branches"
-
-[tool.kubeswitch]
-source = "~/Documents/config/config/kubeswitch.config.yaml"
-target = "~/.kube/switch-config.yaml"
 

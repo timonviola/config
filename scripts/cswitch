@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# 
+# Fuzzy kubernetes context switcher.
+#
+#
+# Dependencies:
+# - kubectl
+# - fzf
+
+set -euo pipefail
+kubectl config get-contexts -o=name | fzf | xargs -r kubectl config use-context
