@@ -209,4 +209,10 @@ return {
             })
         end
     },
+    {
+        "timonviola/wezterm-colorsync.nvim",
+        config = function()
+            require("colorsync").setup()
+        end
+    },
 }
