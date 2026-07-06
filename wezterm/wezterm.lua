@@ -368,6 +368,30 @@ config.keys = {
             end
         end),
     },
+    {
+        key = 'w',
+        mods = 'LEADER',
+        action = act.ActivateKeyTable {
+            name = 'double_key_shortcut',
+            one_shot = false,
+        },
+    },
+}
+
+-- Window/pane management short cuts
+config.key_tables = {
+    double_key_shortcut = {
+        -- swap
+        {
+            key = 's',
+            mods = 'LEADER',
+            action = act.PaneSelect {
+                -- custom alphabet to skip 's', as it collides with the key
+                alphabet = 'adfghjklmn',
+                mode = 'SwapWithActive',
+            }
+        }
+    }
 }
 
 --TODO: https://github.com/wez/wezterm/discussions/4796#discussioncomment-8354795
