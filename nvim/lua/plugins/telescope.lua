@@ -1,6 +1,6 @@
 return {
     'nvim-telescope/telescope.nvim',
-    version = '0.1.8',
+    version = '0.2.1',
     dependencies = {
         'nvim-lua/plenary.nvim',
         {
@@ -17,8 +17,9 @@ return {
             defaults = {
                 file_ignore_patterns = {
 
-                 "**/project/**",
-                 "**/target/**" ,
+                    "**/project/**",
+                    "**/target/**",
+                    "**/.metals/**",
                 },
                 -- configure to use ripgrep
                 vimgrep_arguments = {
@@ -42,6 +43,7 @@ return {
                     "--glob=!**/package-lock.json",
                     -- Scala/SBT specific ignores
                     "--glob=!target/*",
+                    "--glob=!.metals/*",
                     "--glob=!project/*",
                 },
             },

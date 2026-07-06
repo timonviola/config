@@ -1,6 +1,7 @@
 return {
     {
         "j-hui/fidget.nvim",
+        -- don't remove the empty opts, it's needed to start the plugin w/ metals
         opts = {}
     },
     {
@@ -11,166 +12,71 @@ return {
             "mfussenegger/nvim-dap",
         }
     },
-    { "kevinhwang91/nvim-bqf" },
+    "kevinhwang91/nvim-bqf",
     {
         "nvim-telescope/telescope.nvim",
         lazy = true,
         dependencies = {
             { "nvim-lua/popup.nvim" },
             { "nvim-lua/plenary.nvim" },
-            { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-        },
-        extensions = {
-            fzf = {
-                fuzzy = true,                   -- false will only do exact matching
-                override_generic_sorter = true, -- override the generic sorter
-                override_file_sorter = true,    -- override the file sorter
-                case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
-                -- the default case_mode is "smart_case"
-            }
+            { "nvim-telescope/telescope-fzy-native.nvim" },
         },
         config = function()
-            local telescope = require('telescope')
-            telescope.load_extension('fzf')
-            telescope.setup {
-                defaults = {
-                    -- Default configuration for telescope goes here:
-                    layout_config = {
-                        -- Enable line numbers
-                        prompt_position = "top",
-                        preview_cutoff = 120,
-                    },
-                    file_ignore_patterns = {
-                        "^project/",
-                        "^target/",
-                    },
-                }
-            }
-        end
-    },
-    { "hrsh7th/cmp-nvim-lsp", lazy = true },
-    { "hrsh7th/cmp-path",     lazy = true },
-    { "hrsh7th/cmp-buffer",   lazy = true },
-    { "hrsh7th/cmp-omni",     lazy = true },
-    { "hrsh7th/cmp-cmdline",  lazy = true },
-    {
-        "quangnguyen30192/cmp-nvim-ultisnips",
-        lazy = true,
-        dependencies = { 'sirver/ultisnips' }
-    },
-    {
-        "hrsh7th/nvim-cmp",
-        name = "nvim-cmp",
-        event = "VeryLazy",
-        config = function()
-            require("plugins.config.nvim-cmp")
-        end,
-    },
-    {
-        'nvim-lualine/lualine.nvim',
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
-        options = { theme = 'tokyonight' },
-        config = function()
-            require("lualine").setup {
-                options = {
-                    theme = 'auto',
-                    section_separators = { '', '' },
-                    component_separators = { '|', '|' },
-                },
-                sections = {
-                    lualine_a = {},
-                    lualine_b = {},
-                    lualine_c = { { 'filename', { path = 1 } } },
-                    lualine_x = { 'filetype' },
-                    lualine_y = { 'progress' },
-                    lualine_z = { 'location', 'mode' },
-                },
-                inactive_sections = {
-                    lualine_b = {},
-                    lualine_c = { { 'filename', { path = 1 } } },
-                    lualine_x = { 'location' },
-                    tabline = {
-                        { lualine_b = { 'branch' } },
-                    }
-                }
-            }
+            require("mesopotamia.plugins.telescope").setup()
         end
     },
     {
-        'windwp/nvim-autopairs',
-        event = "InsertEnter",
-        config = true
-        -- use opts = {} for passing setup options
-        -- this is equivalent to setup({}) function
+        'saghen/blink.cmp',
+        lazy = false, -- lazy loading handled internally
+        dependencies = 'rafamadriz/friendly-snippets',
+        version = '*',
+        ---@module 'blink.cmp'
+        ---@type blink.cmp.Config
+        opts = {
+            keymap = {
+                preset = 'enter',
+                ['<Tab>'] = { 'select_next', 'fallback' },
+                ['<S-Tab>'] = { 'select_prev', 'fallback' }
+            },
+            appearance = {
+                use_nvim_cmp_as_default = true,
+                nerd_font_variant = 'mono',
+            },
+            sources = {
+                default = { 'lsp', 'path', 'snippets', 'buffer' }
+            },
+            signature = { enabled = true },
+        },
+        opts_extend = { "sources.default" }
     },
+    { "fei6409/log-highlight.nvim", event = "BufRead *.log", opts = {} },
     {
-        "neovim/nvim-lspconfig",
+        'nvim-treesitter/nvim-treesitter',
+        lazy = false,
+        build = ':TSUpdate',
         config = function()
-            require("plugins.config.lsp")
-        end,
-    },
-    {
-        'nvim-treesitter/nvim-treesitter-context',
-        config = function()
-            require("treesitter-context").setup {
-                enable = true,
-                max_lines = 1
-            }
-        end,
-    },
-    {
-        'nvim-treesitter/nvim-treesitter-textobjects',
-        config = function()
-            require("treesitter-context").setup {
-                enable = true,
-                max_lines = 1
-            }
-        end,
-    },
-    {
-        'tpope/vim-fugitive',
-        config = function()
-            vim.keymap.set("n", "<leader>gs", vim.cmd.Git);
-        end,
-    },
+            -- ensure parsers are installed
+            require("nvim-treesitter").install({
+                "lua",
+                "javascript",
+                "typescript",
+                "python",
+                "scala",
+                "rust",
+                "go",
+            })
 
-    {
-        'rcarriga/nvim-notify',
-        config = function()
-            require("notify").setup({
+            -- enable treesitter highlighting
+            vim.api.nvim_create_autocmd("FileType", {
+                callback = function(args)
+                    pcall(vim.treesitter.start, args.buf)
+                end,
             })
         end,
     },
-
-    {
-        'mrcjkb/rustaceanvim',
-        version = '^6', -- Recommended
-        lazy = false,   -- This plugin is already lazy
-    },
-    {
-        'mbbill/undotree',
-        config = function()
-            vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
-        end,
-    },
-    -- allows me to open netrw with '-'
-    -- and makes netwr easier for me
-    --:help vinegar
-    'tpope/vim-vinegar',
-    {
-        "qvalentin/helm-ls.nvim",
-        ft = "helm",
-        opts = {
-            conceal_templates = {
-                -- enable the replacement of templates with virtual text of their current values
-                enabled = true, -- tree-sitter must be setup for this feature
-            },
-            indent_hints = {
-                -- enable hints for indent and nindent functions
-                enabled = true, -- tree-sitter must be setup for this feature
-            },
-        },
-    },
+    --
+    -- colors
+    --
     {
         "rebelot/kanagawa.nvim",
         lazy = false,
@@ -210,9 +116,125 @@ return {
         end
     },
     {
+        "rose-pine/neovim",
+        name = "rose-pine",
+    },
+    {
+        "folke/tokyonight.nvim",
+        priority = 1000,
+        config = function()
+            local transparent = true -- set to true if you would like to enable transparency
+
+            local bg = "#011628"
+            local bg_dark = "#011423"
+            local bg_highlight = "#a36b18"
+            local bg_search = "#0A64AC"
+            local bg_visual = "#82c3fa"
+            local fg = "#CBE0F0"
+            local fg_dark = "#B4D0E9"
+            local fg_gutter = "#627E97"
+            local border = "#547998"
+
+            require("tokyonight").setup({
+                style = "night",
+                transparent = transparent,
+                styles = {
+                    sidebars = transparent and "transparent" or "dark",
+                    floats = transparent and "transparent" or "dark",
+                },
+                on_colors = function(colors)
+                    colors.bg = bg
+                    colors.bg_dark = transparent and colors.none or bg_dark
+                    colors.bg_float = transparent and colors.none or bg_dark
+                    colors.bg_highlight = bg_highlight
+                    colors.bg_popup = bg_dark
+                    colors.bg_search = bg_search
+                    colors.bg_sidebar = transparent and colors.none or bg_dark
+                    colors.bg_statusline = transparent and colors.none or bg_dark
+                    colors.bg_visual = bg_visual
+                    colors.border = border
+                    colors.fg = fg
+                    colors.fg_dark = fg_dark
+                    colors.fg_float = fg
+                    colors.fg_gutter = fg_gutter
+                    colors.fg_sidebar = fg_dark
+                    colors.git.add = "#04c904"
+                end,
+                on_highlights = function(hl)
+                    hl.comment = { bg = "#000000", fg = "#518a50" }
+                    hl.perlComment = { bg = "#000000", fg = "#518a50" }
+                    hl.Comment = { bg = "#000000", fg = "#518a50" }
+                end,
+            })
+            -- vim.cmd("colorscheme tokyonight")
+        end,
+    },
+    {
         "timonviola/wezterm-colorsync.nvim",
+        dependencies = {
+            { "rcarriga/nvim-notify" },
+        },
         config = function()
             require("colorsync").setup()
         end
     },
+    -- langs, lsp
+    "neovim/nvim-lspconfig",
+    {
+        'mrcjkb/rustaceanvim',
+        version = '^9',
+        -- this plugin does not need lazy
+        lazy = false,
+    },
+    -- Other stuff
+    --
+    -- allows me to open netrw with '-'
+    -- and makes netwr easier for me
+    --:help vinegar
+    'tpope/vim-vinegar',
+    {
+        'tpope/vim-fugitive',
+        config = function()
+            vim.keymap.set("n", "<leader>gs", vim.cmd.Git);
+        end,
+    },
+    {
+        'nvim-treesitter/nvim-treesitter-context',
+        config = function()
+            require("treesitter-context").setup {
+                enable = true,
+                max_lines = 1
+            }
+        end,
+    },
+    {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        config = true
+    },
+    {
+        'mbbill/undotree',
+        config = function()
+            vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+        end,
+    },
+    --    {
+    --        "ThePrimeagen/harpoon",
+    --        branch = "master",
+    --        dependencies = { "nvim-lua/plenary.nvim" },
+    --        config = function()
+    --            local harpoon = require("harpoon")
+    --            harpoon:setup()
+    --            vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+    --            vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+    --            vim.keymap.set("n", "<C-a>", function() harpoon:list():select(1) end)
+    --            vim.keymap.set("n", "<C-s>", function() harpoon:list():select(2) end)
+    --            vim.keymap.set("n", "<C-d>", function() harpoon:list():select(3) end)
+    --            vim.keymap.set("n", "<C-f>", function() harpoon:list():select(4) end)
+    --
+    --            -- Toggle previous & next buffers stored within Harpoon list
+    --            vim.keymap.set("n", "<C-S-i>", function() harpoon:list():prev() end)
+    --            vim.keymap.set("n", "<C-S-d>", function() harpoon:list():next() end)
+    --        end,
+    --    }
 }

@@ -6,10 +6,21 @@ require("cmp_nvim_lsp")
 require("cmp_path")
 require("cmp_buffer")
 require("cmp_omni")
-require("cmp_nvim_ultisnips")
 require("cmp_cmdline")
 
 cmp.setup {
+    window = {
+        completion = cmp.config.window.bordered({
+            -- make the completion list less wide
+            max_width = 40,
+            scrollbar = true,
+        }),
+        documentation = cmp.config.window.bordered({
+            -- size of the doc popup
+            max_width = 60,
+            max_height = 10,
+        }),
+    },
     mapping = cmp.mapping.preset.insert {
         ["<Tab>"] = function(fallback)
             if cmp.visible() then
@@ -32,26 +43,26 @@ cmp.setup {
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
     },
     sources = {
-        { name = "nvim_lsp" },               -- For nvim-lsp
-        { name = "ultisnips" },              -- For ultisnips user.
-        { name = "path" },                   -- for path completion
-        { name = "buffer",   keyword_length = 2 }, -- for buffer word completion
+        { name = "nvim_lsp_signature_help" },
+        { name = "nvim_lsp" },                                   -- For nvim-lsp
+        { name = "ultisnips" },                                  -- For ultisnips user.
+        { name = "path" },                                       -- for path completion
+        { name = "buffer",                 keyword_length = 2 }, -- for buffer word completion
     },
     completion = {
         keyword_length = 1,
         completeopt = "menu,noselect",
     },
     view = {
-        entries = "custom",
+        entries = { 'custom', selection_order = 'near_cursor' },
     },
 }
 
 cmp.setup.filetype("tex", {
     sources = {
         { name = "omni" },
-        { name = "ultisnips" },              -- For ultisnips user.
-        { name = "buffer",   keyword_length = 2 }, -- for buffer word completion
-        { name = "path" },                   -- for path completion
+        { name = "buffer", keyword_length = 2 }, -- for buffer word completion
+        { name = "path" },                       -- for path completion
     },
 })
 

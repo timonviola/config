@@ -5,19 +5,17 @@ local setup = function()
     local lsp_group = api.nvim_create_augroup("lsp", { clear = true })
 
     local on_attach = function(client, bufnr)
-        map("n", "<leader>awf", vim.lsp.buf.add_workspace_folder)
-        map("n", "<leader>ca", vim.lsp.buf.code_action)
-        vim.keymap.set("n", "F3", vim.lsp.buf.format)
-        map("n", "<leader>cl", vim.lsp.codelens.run)
-        map("n", "F2", vim.lsp.buf.rename)
-        map("n", "<leader>sh", vim.lsp.buf.signature_help)
-        map("n", "K", vim.lsp.buf.hover)
         map("n", "gD", vim.lsp.buf.definition)
-        vim.keymap.set("n", "gds", vim.lsp.buf.document_symbol)
+        map("n", "gtD", vim.lsp.buf.type_definition)
+        map("n", "K", vim.lsp.buf.hover)
         map("n", "gi", vim.lsp.buf.implementation)
         map("n", "gr", vim.lsp.buf.references)
-        map("n", "gtD", vim.lsp.buf.type_definition)
-        vim.keymap.set("n", "gws", vim.lsp.buf.workspace_symbol)
+        map("n", "<leader>sh", vim.lsp.buf.signature_help)
+        map("n", "<leader>rn", vim.lsp.buf.rename)
+        map("n", "<leader>ca", vim.lsp.buf.code_action)
+        map("v", "<leader>ca", vim.lsp.buf.code_action)
+        map("n", "<leader>cl", vim.lsp.codelens.run)
+        map("n", "<leader>awf", vim.lsp.buf.add_workspace_folder)
         map("n", "<leader>h", function()
             if client.server_capabilities.inlayHintProvider then
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
@@ -26,6 +24,8 @@ local setup = function()
             end
         end)
 
+        -- mine
+
         local opts = { silent = true }
         opts.desc = "Show buffer diagnostics"
         map("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
@@ -33,12 +33,11 @@ local setup = function()
         opts.desc = "Show line diagnostics"
         map("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
-        vim.keymap.set('n', '[d', function()
-            vim.diagnostic.jump({ count = -1, float = true })
-        end)
-        vim.keymap.set('n', ']d', function()
-            vim.diagnostic.jump({ count = 1, float = true })
-        end)
+        opts.desc = "Go to previous diagnostic"
+        map("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
+
+        opts.desc = "Go to next diagnostic"
+        map("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
 
         opts.desc = "Show documentation for what is under cursor"
         map("n", "K", vim.lsp.buf.hover, opts)
@@ -49,8 +48,6 @@ local setup = function()
         end)
 
         api.nvim_set_option_value("omnifunc", "v:lua.vim.lsp.omnifunc", { buf = bufnr })
-
-        vim.keymap.set("n", "<leader>mc", require("telescope").extensions.metals.commands)
     end
 
     --================================
@@ -64,7 +61,10 @@ local setup = function()
         },
     }
 
+    --metals_config.cmd = { "cs", "launch", "tech.neader:langoustine-tracer_3:0.0.18", "--", "metals" }
     metals_config.settings = {
+        --bloopVersion = "1.5.6-253-5faffd8d-SNAPSHOT",
+        --disabledMode = true,
         defaultBspToBuildTool = true,
         enableSemanticHighlighting = false,
         inlayHints = {
@@ -74,6 +74,7 @@ local setup = function()
             implicitConversions = { enable = true },
             inferredTypes = { enable = true },
             typeParameters = { enable = true },
+
         },
         serverVersion = "latest.snapshot",
         -- startMcpServer = true,
@@ -121,6 +122,76 @@ local setup = function()
             buffer = bufnr,
             group = lsp_group,
         })
+        api.nvim_create_autocmd("FileType", {
+            pattern = { "dap-repl" },
+            callback = function()
+                require("dap.ext.autocompl").attach()
+            end,
+            group = lsp_group,
+        })
+
+        -- nvim-dap
+        -- I only use nvim-dap with Scala, so we keep it all in here
+        local dap = require("dap")
+
+        dap.configurations.scala = {
+            {
+                type = "scala",
+                request = "launch",
+                name = "Run or test with input",
+                metals = {
+                    runType = "runOrTestFile",
+                    args = function()
+                        local args_string = vim.fn.input("Arguments: ")
+                        return vim.split(args_string, " +")
+                    end,
+                },
+            },
+            {
+                type = "scala",
+                request = "launch",
+                name = "Run or Test",
+                metals = {
+                    runType = "runOrTestFile",
+                },
+            },
+            {
+                type = "scala",
+                request = "launch",
+                name = "Test Target",
+                metals = {
+                    runType = "testTarget",
+                },
+            },
+            {
+                type = "scala",
+                request = "launch",
+                name = "Run minimal2 main",
+                metals = {
+                    mainClass = "minimal2.Main",
+                    buildTarget = "minimal",
+                },
+            },
+        }
+
+        map("n", "<leader>dc", require("dap").continue)
+        map("n", "<leader>dr", require("dap").repl.toggle)
+        map("n", "<leader>dK", require("dap.ui.widgets").hover)
+        map("n", "<leader>dtb", require("dap").toggle_breakpoint)
+        map("n", "<leader>dso", require("dap").step_over)
+        map("n", "<leader>dsi", require("dap").step_into)
+        map("n", "<leader>drl", require("dap").run_last)
+
+        map("n", "<leader>dtc", function()
+            require("dap").toggle_breakpoint("x == 3")
+        end)
+
+        dap.listeners.after["event_terminated"]["nvim-metals"] = function()
+            vim.notify("dap finished!")
+            --dap.repl.open()
+        end
+
+        require("metals").setup_dap()
     end
 
     local nvim_metals_group = api.nvim_create_augroup("nvim-metals", { clear = true })
@@ -187,21 +258,6 @@ local setup = function()
     }
     vim.lsp.enable('lua_ls')
 
-    vim.lsp.config.jsonls = {
-        cmd = { 'vscode-json-language-server', '--stdio' },
-        filetypes = { 'json', 'jsonc' },
-        root_markers = { 'package.json', '.git' },
-        on_attach = on_attach_with_check('vscode-json-language-server'),
-        commands = {
-            Format = {
-                function()
-                    vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line("$"), 0 })
-                end,
-            },
-        },
-    }
-    vim.lsp.enable('jsonls')
-
     vim.lsp.config.yamlls = {
         cmd = { 'yaml-language-server', '--stdio' },
         filetypes = { 'yaml', 'yml', 'yaml.docker-compose', 'yaml.gitlab' },
@@ -219,12 +275,12 @@ local setup = function()
 
     -- These server just use the vanilla setup
     local servers = {
-        { name = "bashls",       cmd = { "bash-language-server", "start" },          filetypes = { "sh", "bash" },                                                     root_markers = { ".git" } },
-        { name = "dockerls",     cmd = { "docker-langserver", "--stdio" },           filetypes = { "dockerfile" },                                                     root_markers = { "Dockerfile", ".git" } },
-        { name = "html",         cmd = { "vscode-html-language-server", "--stdio" }, filetypes = { "html" },                                                           root_markers = { "package.json", ".git" } },
-        { name = "ts_ls",        cmd = { "typescript-language-server", "--stdio" },  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" }, root_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" } },
-        { name = "gopls",        cmd = { "gopls" },                                  filetypes = { "go", "gomod", "gowork", "gotmpl" },                                root_markers = { "go.mod", "go.work", ".git" } },
-        { name = "basedpyright", cmd = { "basedpyright-langserver", "--stdio" },     filetypes = { "python" },                                                         root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" } },
+        { name = "bashls",   cmd = { "bash-language-server", "start" },          filetypes = { "sh", "bash" },                                                     root_markers = { ".git" } },
+        { name = "dockerls", cmd = { "docker-langserver", "--stdio" },           filetypes = { "dockerfile" },                                                     root_markers = { "Dockerfile", ".git" } },
+        { name = "html",     cmd = { "vscode-html-language-server", "--stdio" }, filetypes = { "html" },                                                           root_markers = { "package.json", ".git" } },
+        { name = "ts_ls",    cmd = { "typescript-language-server", "--stdio" },  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" }, root_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" } },
+        { name = "gopls",    cmd = { "gopls" },                                  filetypes = { "go", "gomod", "gowork", "gotmpl" },                                root_markers = { "go.mod", "go.work", ".git" } },
+        { name = "pyright",  cmd = { "pyright-langserver", "--stdio" },          filetypes = { "python" },                                                         root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" } },
     }
     for _, server in pairs(servers) do
         vim.lsp.config[server.name] = {

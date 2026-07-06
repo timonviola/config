@@ -116,7 +116,7 @@ return {
         metals_config.settings = {
             -- serverVersion = "1.6.7",
             serverVersion = "latest.snapshot",
-            defaultBspToBuildTool = true,
+            defaultBspToBuildTool = false,
             enableSemanticHighlighting = false,
             inlayHints = {
                 byNameParameters = { enable = true },
@@ -140,7 +140,7 @@ return {
         }
 
         -- Example if you are using cmp how to make sure the correct capabilities for snippets are set
-        -- metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
+        metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
 
         metals_config.on_attach = function(client, bufnr)
             require("metals").setup_dap()
@@ -168,46 +168,46 @@ return {
             end)
             vim.api.nvim_set_option_value("omnifunc", "v:lua.vim.lsp.omnifunc", { buf = bufnr })
             -- More metals specific maps and autocmd
-            vim.keymap.set("v", "K", require("metals").type_of_range)
+            --            vim.keymap.set("v", "K", require("metals").type_of_range)
+            --
+            --            vim.keymap.set("n", "<leader>ws", function()
+            --                require("metals").hover_worksheet({ border = "single" })
+            --            end)
+            --
+            --            vim.keymap.set("n", "<leader>tt", require("metals.tvp").toggle_tree_view)
+            --
+            --            vim.keymap.set("n", "<leader>tr", require("metals.tvp").reveal_in_tree)
+            --
+            --            vim.keymap.set("n", "<leader>mmc", require("metals").commands)
 
-            vim.keymap.set("n", "<leader>ws", function()
-                require("metals").hover_worksheet({ border = "single" })
-            end)
-
-            vim.keymap.set("n", "<leader>tt", require("metals.tvp").toggle_tree_view)
-
-            vim.keymap.set("n", "<leader>tr", require("metals.tvp").reveal_in_tree)
-
-            vim.keymap.set("n", "<leader>mmc", require("metals").commands)
-
-            -- A lot of the servers I use won't support document_highlight or codelens,
-            -- so we just use them in Metals
-            local lsp_group = vim.api.nvim_create_augroup("lsp", { clear = true })
-            vim.api.nvim_create_autocmd("CursorHold", {
-                callback = vim.lsp.buf.document_highlight,
-                buffer = bufnr,
-                group = lsp_group,
-            })
-            vim.api.nvim_create_autocmd("CursorMoved", {
-                callback = function()
-                    vim.lsp.buf.clear_references()
-                end,
-                buffer = bufnr,
-                group = lsp_group,
-            })
-            vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
-                callback = vim.lsp.codelens.refresh,
-                buffer = bufnr,
-                group = lsp_group,
-            })
-            vim.api.nvim_create_autocmd("FileType", {
-                pattern = { "dap-repl" },
-                callback = function()
-                    require("dap.ext.autocompl").attach()
-                end,
-                group = lsp_group,
-            })
-            configure_dap()
+            --            -- A lot of the servers I use won't support document_highlight or codelens,
+            --            -- so we just use them in Metals
+            --            local lsp_group = vim.api.nvim_create_augroup("lsp", { clear = true })
+            --            vim.api.nvim_create_autocmd("CursorHold", {
+            --                callback = vim.lsp.buf.document_highlight,
+            --                buffer = bufnr,
+            --                group = lsp_group,
+            --            })
+            --            vim.api.nvim_create_autocmd("CursorMoved", {
+            --                callback = function()
+            --                    vim.lsp.buf.clear_references()
+            --                end,
+            --                buffer = bufnr,
+            --                group = lsp_group,
+            --            })
+            --            vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
+            --                callback = vim.lsp.codelens.refresh,
+            --                buffer = bufnr,
+            --                group = lsp_group,
+            --            })
+            --            vim.api.nvim_create_autocmd("FileType", {
+            --                pattern = { "dap-repl" },
+            --                callback = function()
+            --                    require("dap.ext.autocompl").attach()
+            --                end,
+            --                group = lsp_group,
+            --            })
+            -- configure_dap()
         end
 
         -- Show metals commands in telescope
