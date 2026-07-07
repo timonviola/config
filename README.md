@@ -5,6 +5,18 @@
 I use lazy.nvim - it will bootstrap, or you just sync the packages first time
 you open nvim.
 
+### Troubleshooting
+To start from a clean-slate, test different versions, you should set:
+`NVIM_APPNAME=<new-config>` - where new config is a configuration folder under $XDG_HOME/.config/ (the default is $XDG_HOME/.config/nvim)
+
+When all hope is lost:
+- rm -rf ~/.local/state/nvim
+- rm -rf ~/.local/share/nvim
+- rm -rf ~/.cache/nvim
+
+#### LSP
+- LSP has to be on the path
+
 ## wezTerm
 ### workspaces / sessionizer
 The workflow is:
