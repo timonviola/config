@@ -8,21 +8,21 @@ local opt = vim.opt
 
 -- Ignore compiled files
 opt.wildignore = "__pycache__"
-vim.opt.wildignore:append { "*.o", "*~", "*.pyc", "*pycache*" }
-vim.opt.wildignore:append { "Cargo.lock", "Cargo.Bazel.lock" }
+vim.opt.wildignore:append({ "*.o", "*~", "*.pyc", "*pycache*" })
+vim.opt.wildignore:append({ "Cargo.lock", "Cargo.Bazel.lock" })
 
 -- Cursorline highlighting control
 --  Only have it on in the active buffer
 opt.cursorline = true -- Highlight the current line
 local group = vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
 local set_cursorline = function(event, value, pattern)
-    vim.api.nvim_create_autocmd(event, {
-        group = group,
-        pattern = pattern,
-        callback = function()
-            vim.opt_local.cursorline = value
-        end,
-    })
+  vim.api.nvim_create_autocmd(event, {
+    group = group,
+    pattern = pattern,
+    callback = function()
+      vim.opt_local.cursorline = value
+    end,
+  })
 end
 set_cursorline("WinLeave", false)
 set_cursorline("WinEnter", true)
@@ -36,12 +36,12 @@ opt.inccommand = "split"
 opt.modelines = 1
 opt.mouse = "a"
 opt.shada = { "!", "'1000", "<50", "s10", "h" }
-opt.swapfile = false                                     -- Living on the edge
-vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#326941' }) -- Statusline is green
-vim.cmd('filetype plugin on')                            -- filetype specific settings in /after/ftp
-vim.g.netrw_liststyle = 3                                -- make tree view the default
-vim.g.netrw_preview = 1                                  -- make vertical splitting the default
-vim.g.netrw_winsize = 30                                 -- make window size 30% the default
+opt.swapfile = false -- Living on the edge
+vim.api.nvim_set_hl(0, "StatusLine", { bg = "#326941" }) -- Statusline is green
+vim.cmd("filetype plugin on") -- filetype specific settings in /after/ftp
+vim.g.netrw_liststyle = 3 -- make tree view the default
+vim.g.netrw_preview = 1 -- make vertical splitting the default
+vim.g.netrw_winsize = 30 -- make window size 30% the default
 vim.opt.colorcolumn = "80"
 vim.opt.diffopt = { "internal", "filler", "closeoff", "hiddenoff", "algorithm:minimal" }
 vim.opt.expandtab = true

@@ -63,15 +63,19 @@ fi
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias vim=nvim
+alias vim=nvim12
 alias vimg='nvim +Git +only'
+# config rewrite scala vim
+alias vimm='NVIM_APPNAME=viminal nvim'
 alias st=starship_toggle
 alias sp=ssh_spawn
 alias pm=podman
+alias g=git
+alias ls='ls --color=auto'
 
-# Autocopmletion for pipx in zsh
-autoload -Uz compinit
-compinit
+# autoload
+autoload -Uz compinit && compinit
+autoload -Uz bashcompinit && bashcompinit
 
 # MAC specific settings
 if [ "$(getos)" = Mac ]; then                                              
@@ -91,6 +95,7 @@ fi
 
 # source custom functions
 . ~/.local/bin/dswitch
+. ~/.local/bin/aswitch
 # oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 # Use starship prompt
@@ -103,7 +108,13 @@ export PATH="$PATH:/opt/nvim-linux64/bin"
 
 export GPG_TTY=$(tty)
 setopt COMBINING_CHARS
-export KUBECONFIG="$HOME/.kube/config/bika-config"
 
 eval "$(direnv hook zsh)"
 export EZA_CONFIG_DIR=/Users/timon/eza
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/Downloads/WezTerm-macos-20240203-110809-5046fc22/WezTerm.app/Contents/MacOS:$PATH"
+
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
