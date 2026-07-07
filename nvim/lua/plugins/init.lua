@@ -43,7 +43,15 @@ return {
                 nerd_font_variant = 'mono',
             },
             sources = {
-                default = { 'lsp', 'path', 'snippets', 'buffer' }
+                default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+                providers = {
+                  lazydev = {
+                    name = "LazyDev",
+                    module = "lazydev.integrations.blink",
+                    -- make lazydev completions top priority (see `:h blink.cmp`)
+                    score_offset = 100,
+                  },
+                },
             },
             signature = { enabled = true },
         },
@@ -56,7 +64,7 @@ return {
         build = ':TSUpdate',
         config = function()
             -- ensure parsers are installed
-            require("nvim-treesitter").install({
+            require("nvim-treesitter").install {
                 "lua",
                 "javascript",
                 "typescript",
@@ -64,7 +72,7 @@ return {
                 "scala",
                 "rust",
                 "go",
-            })
+            }
 
             -- enable treesitter highlighting
             vim.api.nvim_create_autocmd("FileType", {
@@ -178,7 +186,47 @@ return {
             require("colorsync").setup()
         end
     },
-    -- langs, lsp
+    --
+    -- langs, LSP
+    --
+    {
+    'williamboman/mason.nvim',
+    version = "^2.3.0",
+    dependencies = {
+        "williamboman/mason-lspconfig.nvim",
+        "neovim/nvim-lspconfig",
+    },
+    config = function()
+        -- import mason
+        local mason = require("mason")
+
+        -- import mason-lspconfig
+        local mason_lspconfig = require("mason-lspconfig")
+
+        -- enable mason and configure icons
+        mason.setup({
+            ui = {
+                icons = {
+                    package_installed = "✓",
+                    package_pending = "➜",
+                    package_uninstalled = "✗",
+                },
+            },
+        })
+
+        mason_lspconfig.setup({
+            -- list of servers for mason to install
+            ensure_installed = {
+                -- 'harper_ls',
+                -- rust_analyzer is managed by rustaceanvim
+                'lua_ls',
+                'basedpyright',
+                'ruff',
+                'yamlls',
+            },
+        })
+    end,
+},
     "neovim/nvim-lspconfig",
     {
         'mrcjkb/rustaceanvim',
@@ -186,6 +234,18 @@ return {
         -- this plugin does not need lazy
         lazy = false,
     },
+    {
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+        { path = "wezterm-types", mods = { "wezterm" } },
+      },
+    },
+  },
     -- Other stuff
     --
     -- allows me to open netrw with '-'

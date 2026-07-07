@@ -31,3 +31,5 @@ require("lazy").setup({
 --================================
 
 require("lsp").setup()
+require("mycolors")
+require("myremaps")
