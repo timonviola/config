@@ -16,7 +16,7 @@ vim.keymap.set("n", "<C-j>", "<C-d>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 -- keep void buffer after pasting over
-vim.keymap.set("x", "<leader>p", "\"_dP")
+vim.keymap.set("x", "<leader>p", '"_dP')
 -- Navigate between quick fix items
 vim.keymap.set("n", "<leader>cn", "<cmd>cnext<CR>zz", { desc = "Forward qfixlist" })
 vim.keymap.set("n", "<leader>cN", "<cmd>cprev<CR>zz", { desc = "Backward qfixlist" })
