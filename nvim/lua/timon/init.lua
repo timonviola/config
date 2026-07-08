@@ -1,5 +1,3 @@
-require("timon.remap")
-
 vim.g.loaded_matchparen = 1
 
 vim.g.mapleader = " "

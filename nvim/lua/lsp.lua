@@ -15,11 +15,13 @@ local setup = function()
     map("n", "<leader>sh", vim.lsp.buf.signature_help)
     map("n", "K", vim.lsp.buf.hover)
     map("n", "gd", vim.lsp.buf.definition)
-    vim.keymap.set("n", "gds", vim.lsp.buf.document_symbol)
+    -- use telescope
+    -- vim.keymap.set("n", "gds", vim.lsp.buf.document_symbol)
     map("n", "gi", vim.lsp.buf.implementation)
     map("n", "gr", vim.lsp.buf.references)
     map("n", "gtD", vim.lsp.buf.type_definition)
-    vim.keymap.set("n", "gws", vim.lsp.buf.workspace_symbol)
+    -- use telescope
+    -- vim.keymap.set("n", "gws", vim.lsp.buf.workspace_symbol)
     map("n", "<leader>h", function()
       if client.server_capabilities.inlayHintProvider then
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
@@ -96,7 +98,8 @@ local setup = function()
   metals_config.on_attach = function(client, bufnr)
     on_attach(client, bufnr)
 
-    map("v", "K", require("metals").type_of_range)
+    -- I don't really find this useful
+    -- map("v", "K", require("metals").type_of_range)
 
     map("n", "<leader>ws", function()
       require("metals").hover_worksheet({ border = "single" })

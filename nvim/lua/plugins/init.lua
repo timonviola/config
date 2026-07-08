@@ -182,11 +182,21 @@ return {
       -- vim.cmd("colorscheme tokyonight")
     end,
   },
+  --  {
+  --    "timonviola/wezterm-colorsync.nvim",
+  --    dependencies = {
+  --      { "rcarriga/nvim-notify" },
+  --    },
+  --    config = function()
+  --      require("colorsync").setup()
+  --    end,
+  --  },
   {
-    "timonviola/wezterm-colorsync.nvim",
+    dir = vim.fn.expand("/Users/TIVI/timon/wezterm-colorsync.nvim"),
     dependencies = {
       { "rcarriga/nvim-notify" },
     },
+    name = "colorsync", -- recommended if the dir name isn't unique
     config = function()
       require("colorsync").setup()
     end,
@@ -213,7 +223,7 @@ return {
         -- See the configuration section for more details
         -- Load luvit types when the `vim.uv` word is found
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-        { path = "wezterm-types", mods = { "wezterm" } },
+        { path = "wezterm-types",      mods = { "wezterm" } },
       },
     },
   },
