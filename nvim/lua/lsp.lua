@@ -62,6 +62,18 @@ local setup = function()
   })
 
   ------------------------------------------------
+  -- RUSTaceanvim specific setup
+  --
+  -- rest is in ftp /rust.lua
+  ------------------------------------------------
+  vim.g.rustaceanvim = {
+    server = {
+      on_attach = function(client, buffer)
+        on_attach(client, bufnr)
+      end
+    }
+  }
+  ------------------------------------------------
   -- Metals specific setup
   ------------------------------------------------
   local metals_config = require("metals").bare_config()

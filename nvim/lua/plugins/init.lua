@@ -233,6 +233,9 @@ return {
   -- and makes netwr easier for me
   --:help vinegar
   "tpope/vim-vinegar",
+  -- comment out lines with `gc`
+  -- alternative: https://github.com/numToStr/Comment.nvim
+  "tpope/vim-commentary",
   {
     "tpope/vim-fugitive",
     config = function()
