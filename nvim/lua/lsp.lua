@@ -70,8 +70,8 @@ local setup = function()
     server = {
       on_attach = function(client, buffer)
         on_attach(client, bufnr)
-      end
-    }
+      end,
+    },
   }
   ------------------------------------------------
   -- Metals specific setup

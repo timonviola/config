@@ -8,7 +8,7 @@ local themes = require("telescope.themes")
 map.nnoremap("<leader>ff", function()
   builtin.find_files(
     themes.get_ivy()
-  -- {layout_strategy = 'vertical', layout_config={height=0.5}}
+    -- {layout_strategy = 'vertical', layout_config={height=0.5}}
   )
 end)
 -- find git
