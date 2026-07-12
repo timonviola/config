@@ -21,10 +21,11 @@ local config = wezterm.config_builder()
 
 --- Return True if HOME looks like as on Linux.
 local function is_linux()
-    return "/home/timon" == os.getenv("HOME")
+  return "/home/timon" == os.getenv("HOME")
 end
 
 
+config.term = "wezterm"
 -- This is where you actually apply your config choices
 -- Font
 config.font_size = 12
@@ -36,15 +37,15 @@ config.cell_width = 0.95
 config.window_decorations = 'RESIZE'
 
 if is_linux() then
-    config.font_size = 12
-    config.line_height = 1.0
-    config.enable_wayland = true
-    config.window_decorations = 'RESIZE'
+  config.font_size = 12
+  config.line_height = 1.0
+  config.enable_wayland = true
+  config.window_decorations = 'RESIZE'
 end
 
 config.ssh_domains = wezterm.default_ssh_domains()
 for _, dom in ipairs(config.ssh_domains) do
-    dom.assume_shell = 'Posix'
+  dom.assume_shell = 'Posix'
 end
 -- config.freetype_load_target = "Light"
 --config.color_scheme = 'Tokyo Night'
@@ -53,10 +54,10 @@ end
 local file = io.open(wezterm.config_dir .. "/colorscheme", "r")
 
 if file then
-    config.color_scheme = file:read("*a")
-    file:close()
+  config.color_scheme = file:read("*a")
+  file:close()
 else
-    config.color_scheme = "Tokyo Night Day"
+  config.color_scheme = "Tokyo Night Day"
 end
 -- config.window_background_gradient = {
 --   -- Can be "Vertical" or "Horizontal".  Specifies the direction
@@ -113,285 +114,285 @@ config.window_background_opacity = 0.95
 config.text_background_opacity = 0.3
 config.macos_window_background_blur = 30
 config.window_padding = {
-    left = 10,
-    right = 10,
-    top = 20,
-    bottom = 10,
+  left = 10,
+  right = 10,
+  top = 20,
+  bottom = 10,
 }
 -- General
 config.native_macos_fullscreen_mode = false
 config.leader = { key = 'b', mods = 'CTRL', timeout_milliseconds = 1000 }
 config.debug_key_events = true
 config.keys = {
-    {
-        key = 'LeftArrow',
-        mods = 'OPT',
-        action = act.SendKey {
-            key = 'b',
-            mods = 'ALT',
-        },
+  {
+    key = 'LeftArrow',
+    mods = 'OPT',
+    action = act.SendKey {
+      key = 'b',
+      mods = 'ALT',
     },
-    {
-        key = 't',
-        mods = 'LEADER',
-        action = act.SpawnTab 'CurrentPaneDomain',
-    },
-    {
-        key = 'RightArrow',
-        mods = 'OPT',
-        action = act.SendKey { key = 'f', mods = 'ALT' },
-    },
-    -- Send "CTRL-A" to the terminal when pressing CTRL-A, CTRL-A
-    {
-        key = '[',
-        mods = 'LEADER',
-        action = act.ActivateCopyMode,
-    },
-    {
-        -- Work in progress
-        key = 'e',
-        mods = 'LEADER',
-        action = wezterm.action_callback(function(window, pane)
-            -- We're going to dynamically construct the list and then
-            -- show it.  Here we're just showing some numbers but you
-            -- could read or compute data from other sources
+  },
+  {
+    key = 't',
+    mods = 'LEADER',
+    action = act.SpawnTab 'CurrentPaneDomain',
+  },
+  {
+    key = 'RightArrow',
+    mods = 'OPT',
+    action = act.SendKey { key = 'f', mods = 'ALT' },
+  },
+  -- Send "CTRL-A" to the terminal when pressing CTRL-A, CTRL-A
+  {
+    key = '[',
+    mods = 'LEADER',
+    action = act.ActivateCopyMode,
+  },
+  {
+    -- Work in progress
+    key = 'e',
+    mods = 'LEADER',
+    action = wezterm.action_callback(function(window, pane)
+      -- We're going to dynamically construct the list and then
+      -- show it.  Here we're just showing some numbers but you
+      -- could read or compute data from other sources
 
 
-            local domains = wezterm.default_ssh_domains()
-            local choices = {}
-            for _, dom in ipairs(domains) do
-                table.insert(choices, { label = tostring(dom.name) })
+      local domains = wezterm.default_ssh_domains()
+      local choices = {}
+      for _, dom in ipairs(domains) do
+        table.insert(choices, { label = tostring(dom.name) })
+      end
+
+      window:perform_action(
+        act.InputSelector {
+          action = wezterm.action_callback(function(window, pane, id, label)
+            if not id and not label then
+              wezterm.log_info 'cancelled'
+            else
+              wezterm.log_info('you selected ', id, label)
+              -- Since we didn't set an id in this example, we're
+              -- sending the label
+              wezterm.mux.spawn_window { domain = { DomainName = label } }
             end
+          end),
+          title = 'I am title',
+          choices = choices,
+          alphabet = '123456789',
+          description = 'Write the number you want to choose or press / to search.',
+        },
+        pane
+      )
+    end),
+  },
+  {
+    key = 'z',
+    mods = 'LEADER',
+    action = act.TogglePaneZoomState,
+  },
+  {
+    key = 'x',
+    mods = 'LEADER',
+    action = act.CloseCurrentPane { confirm = false },
+  },
+  {
+    key = '%',
+    mods = 'LEADER | SHIFT',
+    action = act.SplitHorizontal { domain = 'CurrentPaneDomain' },
+  },
+  {
+    key = '"',
+    mods = 'LEADER | SHIFT',
+    action = act.SplitVertical { domain = 'CurrentPaneDomain' },
+  },
+  {
+    key = 'j',
+    mods = 'LEADER',
+    action = wezterm.action.ActivatePaneDirection('Down'),
+  },
+  {
+    key = 'k',
+    mods = 'LEADER',
+    action = wezterm.action.ActivatePaneDirection('Up'),
+  },
+  {
+    key = 'l',
+    mods = 'LEADER',
+    action = wezterm.action.ActivatePaneDirection('Right'),
+  },
+  {
+    key = 'h',
+    mods = 'LEADER',
+    action = wezterm.action.ActivatePaneDirection('Left'),
+  },
+  {
+    mods = "LEADER",
+    key = "LeftArrow",
+    action = wezterm.action.AdjustPaneSize { "Left", 5 }
+  },
+  {
+    mods = "LEADER",
+    key = "RightArrow",
+    action = wezterm.action.AdjustPaneSize { "Right", 5 }
+  },
+  {
+    mods = "LEADER",
+    key = "DownArrow",
+    action = wezterm.action.AdjustPaneSize { "Down", 5 }
+  },
+  {
+    mods = "LEADER",
+    key = "UpArrow",
+    action = wezterm.action.AdjustPaneSize { "Up", 5 }
+  },
+  {
+    key = 'n',
+    mods = 'LEADER',
+    action = wezterm.action.ActivateTabRelative(1),
+  },
+  {
+    key = 'p',
+    mods = 'LEADER',
+    action = wezterm.action.ActivateTabRelative(-1),
+  },
+  -- Sessonizer-ish
+  --    {
+  --        key = 's',
+  --        mods = 'LEADER',
+  --        action = wezterm.action.SpawnCommandInNewTab {
+  --            args = { 'switch' },
+  --        },
+  --    },
+  -- ssh-tab
+  -- note: maybe I should use the same command for switch and 'ssh_spawn"
+  --    {
+  --        -- g as "go"
+  --        key = 'g',
+  --        mods = 'LEADER',
+  --        action = wezterm.action.SpawnCommandInNewTab {
+  --          args = { 'ssh_spawn' },
+  --        },
+  --    },
+  -- Rename tab
+  {
+    key = 'r',
+    mods = 'LEADER',
+    action = act.PromptInputLine {
+      description = 'New tab name:',
+      action = wezterm.action_callback(function(window, pane, line)
+        -- line will be `nil` if they hit escape without entering anything
+        -- An empty string if they just hit enter
+        -- Or the actual line of text they wrote
+        if line then
+          window:active_tab():set_title(line)
+        end
+      end),
+    },
+  },
+  -- Ref: https://mwop.net/blog/2024-07-04-how-i-use-wezterm.html
+  {
+    key = 'a',
+    mods = 'LEADER',
+    action = act.AttachDomain 'unix',
+  },
 
-            window:perform_action(
-                act.InputSelector {
-                    action = wezterm.action_callback(function(window, pane, id, label)
-                        if not id and not label then
-                            wezterm.log_info 'cancelled'
-                        else
-                            wezterm.log_info('you selected ', id, label)
-                            -- Since we didn't set an id in this example, we're
-                            -- sending the label
-                            wezterm.mux.spawn_window { domain = { DomainName = label } }
-                        end
-                    end),
-                    title = 'I am title',
-                    choices = choices,
-                    alphabet = '123456789',
-                    description = 'Write the number you want to choose or press / to search.',
-                },
-                pane
+  -- Detach from muxer
+  {
+    key = 'd',
+    mods = 'LEADER',
+    action = act.DetachDomain { DomainName = 'unix' },
+  },
+  {
+    key = '$',
+    mods = 'LEADER|SHIFT',
+    action = act.PromptInputLine {
+      description = 'Enter new name for session',
+      action = wezterm.action_callback(
+        function(window, pane, line)
+          if line then
+            wezterm.mux.rename_workspace(
+              window:mux_window():get_workspace(),
+              line
             )
-        end),
+          end
+        end
+      ),
     },
-    {
-        key = 'z',
-        mods = 'LEADER',
-        action = act.TogglePaneZoomState,
-    },
-    {
-        key = 'x',
-        mods = 'LEADER',
-        action = act.CloseCurrentPane { confirm = false },
-    },
-    {
-        key = '%',
-        mods = 'LEADER | SHIFT',
-        action = act.SplitHorizontal { domain = 'CurrentPaneDomain' },
-    },
-    {
-        key = '"',
-        mods = 'LEADER | SHIFT',
-        action = act.SplitVertical { domain = 'CurrentPaneDomain' },
-    },
-    {
-        key = 'j',
-        mods = 'LEADER',
-        action = wezterm.action.ActivatePaneDirection('Down'),
-    },
-    {
-        key = 'k',
-        mods = 'LEADER',
-        action = wezterm.action.ActivatePaneDirection('Up'),
-    },
-    {
-        key = 'l',
-        mods = 'LEADER',
-        action = wezterm.action.ActivatePaneDirection('Right'),
-    },
-    {
-        key = 'h',
-        mods = 'LEADER',
-        action = wezterm.action.ActivatePaneDirection('Left'),
-    },
-    {
-        mods = "LEADER",
-        key = "LeftArrow",
-        action = wezterm.action.AdjustPaneSize { "Left", 5 }
-    },
-    {
-        mods = "LEADER",
-        key = "RightArrow",
-        action = wezterm.action.AdjustPaneSize { "Right", 5 }
-    },
-    {
-        mods = "LEADER",
-        key = "DownArrow",
-        action = wezterm.action.AdjustPaneSize { "Down", 5 }
-    },
-    {
-        mods = "LEADER",
-        key = "UpArrow",
-        action = wezterm.action.AdjustPaneSize { "Up", 5 }
-    },
-    {
-        key = 'n',
-        mods = 'LEADER',
-        action = wezterm.action.ActivateTabRelative(1),
-    },
-    {
-        key = 'p',
-        mods = 'LEADER',
-        action = wezterm.action.ActivateTabRelative(-1),
-    },
-    -- Sessonizer-ish
-    --    {
-    --        key = 's',
-    --        mods = 'LEADER',
-    --        action = wezterm.action.SpawnCommandInNewTab {
-    --            args = { 'switch' },
-    --        },
-    --    },
-    -- ssh-tab
-    -- note: maybe I should use the same command for switch and 'ssh_spawn"
-    --    {
-    --        -- g as "go"
-    --        key = 'g',
-    --        mods = 'LEADER',
-    --        action = wezterm.action.SpawnCommandInNewTab {
-    --          args = { 'ssh_spawn' },
-    --        },
-    --    },
-    -- Rename tab
-    {
-        key = 'r',
-        mods = 'LEADER',
-        action = act.PromptInputLine {
-            description = 'New tab name:',
-            action = wezterm.action_callback(function(window, pane, line)
-                -- line will be `nil` if they hit escape without entering anything
-                -- An empty string if they just hit enter
-                -- Or the actual line of text they wrote
-                if line then
-                    window:active_tab():set_title(line)
-                end
-            end),
-        },
-    },
-    -- Ref: https://mwop.net/blog/2024-07-04-how-i-use-wezterm.html
-    {
-        key = 'a',
-        mods = 'LEADER',
-        action = act.AttachDomain 'unix',
-    },
+  },
+  {
+    key = 's',
+    mods = 'LEADER',
+    action = act.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES' },
+  },
 
-    -- Detach from muxer
-    {
-        key = 'd',
-        mods = 'LEADER',
-        action = act.DetachDomain { DomainName = 'unix' },
+  {
+    key = 's',
+    mods = 'LEADER|SHIFT',
+    action = act({ EmitEvent = "save_session" }),
+  },
+  {
+    key = 'L',
+    mods = 'LEADER|SHIFT',
+    action = act({ EmitEvent = "load_session" }),
+  },
+  {
+    key = 'R',
+    mods = 'LEADER|SHIFT',
+    action = act({ EmitEvent = "restore_session" }),
+  },
+  -- Lately I am having some problem with clipboard sinking between the OS clipboard and wezterm
+  -- had no issue with tmux+pbcopy and
+  -- since Nvim prioritizes pbcopy, there is a good chance this will workout.
+  -- https://neo.vimhelp.org/provider.txt.html#provider-clipboard%20clipboard
+  {
+    key = 'c',
+    mods = 'CMD',
+    action = wezterm.action_callback(function(window, pane)
+      local sel = window:get_selection_text_for_pane(pane) or ''
+      if sel ~= '' then
+        local p = io.popen('pbcopy', 'w')
+        p:write(sel)
+        p:close()
+      end
+    end),
+  },
+  -- Optional: Cmd+Shift+V to paste (same behavior)
+  {
+    key = 'v',
+    mods = 'CMD',
+    action = wezterm.action_callback(function(window, pane)
+      local handle = io.popen('pbpaste', 'r')
+      local text = handle:read('*a') or ''
+      handle:close()
+      if text ~= '' then
+        window:perform_action(wezterm.action.SendString(text), pane)
+      end
+    end),
+  },
+  {
+    key = 'w',
+    mods = 'LEADER',
+    action = act.ActivateKeyTable {
+      name = 'double_key_shortcut',
+      one_shot = false,
     },
-    {
-        key = '$',
-        mods = 'LEADER|SHIFT',
-        action = act.PromptInputLine {
-            description = 'Enter new name for session',
-            action = wezterm.action_callback(
-                function(window, pane, line)
-                    if line then
-                        wezterm.mux.rename_workspace(
-                            window:mux_window():get_workspace(),
-                            line
-                        )
-                    end
-                end
-            ),
-        },
-    },
-    {
-        key = 's',
-        mods = 'LEADER',
-        action = act.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES' },
-    },
-
-    {
-        key = 's',
-        mods = 'LEADER|SHIFT',
-        action = act({ EmitEvent = "save_session" }),
-    },
-    {
-        key = 'L',
-        mods = 'LEADER|SHIFT',
-        action = act({ EmitEvent = "load_session" }),
-    },
-    {
-        key = 'R',
-        mods = 'LEADER|SHIFT',
-        action = act({ EmitEvent = "restore_session" }),
-    },
-    -- Lately I am having some problem with clipboard sinking between the OS clipboard and wezterm
-    -- had no issue with tmux+pbcopy and
-    -- since Nvim prioritizes pbcopy, there is a good chance this will workout.
-    -- https://neo.vimhelp.org/provider.txt.html#provider-clipboard%20clipboard
-    {
-        key = 'c',
-        mods = 'CMD',
-        action = wezterm.action_callback(function(window, pane)
-            local sel = window:get_selection_text_for_pane(pane) or ''
-            if sel ~= '' then
-                local p = io.popen('pbcopy', 'w')
-                p:write(sel)
-                p:close()
-            end
-        end),
-    },
-    -- Optional: Cmd+Shift+V to paste (same behavior)
-    {
-        key = 'v',
-        mods = 'CMD',
-        action = wezterm.action_callback(function(window, pane)
-            local handle = io.popen('pbpaste', 'r')
-            local text = handle:read('*a') or ''
-            handle:close()
-            if text ~= '' then
-                window:perform_action(wezterm.action.SendString(text), pane)
-            end
-        end),
-    },
-    {
-        key = 'w',
-        mods = 'LEADER',
-        action = act.ActivateKeyTable {
-            name = 'double_key_shortcut',
-            one_shot = false,
-        },
-    },
+  },
 }
 
 -- Window/pane management short cuts
 config.key_tables = {
-    double_key_shortcut = {
-        -- swap
-        {
-            key = 's',
-            mods = 'LEADER',
-            action = act.PaneSelect {
-                -- custom alphabet to skip 's', as it collides with the key
-                alphabet = 'adfghjklmn',
-                mode = 'SwapWithActive',
-            }
-        }
+  double_key_shortcut = {
+    -- swap
+    {
+      key = 's',
+      mods = 'LEADER',
+      action = act.PaneSelect {
+        -- custom alphabet to skip 's', as it collides with the key
+        alphabet = 'adfghjklmn',
+        mode = 'SwapWithActive',
+      }
     }
+  }
 }
 
 --TODO: https://github.com/wez/wezterm/discussions/4796#discussioncomment-8354795
@@ -400,64 +401,64 @@ config.key_tables = {
 --local rootPath = "/home/timon/Documents"
 
 local function segments_for_right_status(window)
-    return {
-        window:active_workspace(),
-        wezterm.strftime('%a %b %-d %H:%M'),
-        wezterm.hostname(),
-    }
+  return {
+    window:active_workspace(),
+    wezterm.strftime('%a %b %-d %H:%M'),
+    wezterm.hostname(),
+  }
 end
 
 wezterm.on('update-status', function(window, _)
-    local SOLID_LEFT_ARROW = wezterm.nerdfonts.pl_right_hard_divider
-    local segments = segments_for_right_status(window)
+  local SOLID_LEFT_ARROW = wezterm.nerdfonts.pl_right_hard_divider
+  local segments = segments_for_right_status(window)
 
-    local color_scheme = window:effective_config().resolved_palette
-    -- Note the use of wezterm.color.parse here, this returns
-    -- a Color object, which comes with functionality for lightening
-    -- or darkening the colour (amongst other things).
-    local bg = wezterm.color.parse(color_scheme.background)
-    local fg = color_scheme.foreground
+  local color_scheme = window:effective_config().resolved_palette
+  -- Note the use of wezterm.color.parse here, this returns
+  -- a Color object, which comes with functionality for lightening
+  -- or darkening the colour (amongst other things).
+  local bg = wezterm.color.parse(color_scheme.background)
+  local fg = color_scheme.foreground
 
-    -- Each powerline segment is going to be coloured progressively
-    -- darker/lighter depending on whether we're on a dark/light colour
-    -- scheme. Let's establish the "from" and "to" bounds of our gradient.
-    local gradient_to, gradient_from = bg, bg
-    if true then
-        gradient_from = gradient_to:lighten(0.2)
-    else
-        gradient_from = gradient_to:darken(0.2)
+  -- Each powerline segment is going to be coloured progressively
+  -- darker/lighter depending on whether we're on a dark/light colour
+  -- scheme. Let's establish the "from" and "to" bounds of our gradient.
+  local gradient_to, gradient_from = bg, bg
+  if true then
+    gradient_from = gradient_to:lighten(0.2)
+  else
+    gradient_from = gradient_to:darken(0.2)
+  end
+
+  -- Yes, WezTerm supports creating gradients, because why not?! Although
+  -- they'd usually be used for setting high fidelity gradients on your terminal's
+  -- background, we'll use them here to give us a sample of the powerline segment
+  -- colours we need.
+  local gradient = wezterm.color.gradient(
+    {
+      orientation = 'Horizontal',
+      colors = { gradient_from, gradient_to },
+    },
+    #segments -- only gives us as many colours as we have segments.
+  )
+
+  -- We'll build up the elements to send to wezterm.format in this table.
+  local elements = {}
+
+  for i, seg in ipairs(segments) do
+    local is_first = i == 1
+
+    if is_first then
+      table.insert(elements, { Background = { Color = 'none' } })
     end
+    table.insert(elements, { Foreground = { Color = gradient[i] } })
+    table.insert(elements, { Text = SOLID_LEFT_ARROW })
 
-    -- Yes, WezTerm supports creating gradients, because why not?! Although
-    -- they'd usually be used for setting high fidelity gradients on your terminal's
-    -- background, we'll use them here to give us a sample of the powerline segment
-    -- colours we need.
-    local gradient = wezterm.color.gradient(
-        {
-            orientation = 'Horizontal',
-            colors = { gradient_from, gradient_to },
-        },
-        #segments -- only gives us as many colours as we have segments.
-    )
+    table.insert(elements, { Foreground = { Color = fg } })
+    table.insert(elements, { Background = { Color = gradient[i] } })
+    table.insert(elements, { Text = ' ' .. seg .. ' ' })
+  end
 
-    -- We'll build up the elements to send to wezterm.format in this table.
-    local elements = {}
-
-    for i, seg in ipairs(segments) do
-        local is_first = i == 1
-
-        if is_first then
-            table.insert(elements, { Background = { Color = 'none' } })
-        end
-        table.insert(elements, { Foreground = { Color = gradient[i] } })
-        table.insert(elements, { Text = SOLID_LEFT_ARROW })
-
-        table.insert(elements, { Foreground = { Color = fg } })
-        table.insert(elements, { Background = { Color = gradient[i] } })
-        table.insert(elements, { Text = ' ' .. seg .. ' ' })
-    end
-
-    window:set_right_status(wezterm.format(elements))
+  window:set_right_status(wezterm.format(elements))
 end)
 
 -- Tab bar settings
@@ -470,70 +471,70 @@ config.tab_and_split_indices_are_zero_based = true
 --- Keybindings for tabs 0-9
 --- important to set tab_and_split_indices_are_zero_based = true
 for i = 0, 9 do
-    -- leader + number to activate that tab
-    table.insert(config.keys, {
-        key = tostring(i),
-        mods = "LEADER",
-        action = wezterm.action.ActivateTab(i),
-    })
+  -- leader + number to activate that tab
+  table.insert(config.keys, {
+    key = tostring(i),
+    mods = "LEADER",
+    action = wezterm.action.ActivateTab(i),
+  })
 end
 -- This function returns the suggested title for a tab.
 -- It prefers the title that was set via `tab:set_title()`
 -- or `wezterm cli set-tab-title`, but falls back to the
 -- title of the active pane in that tab.
 function tab_title(tab_info)
-    local title = tab_info.tab_title
-    -- if the tab title is explicitly set, take that
-    if title and #title > 0 then
-        return title
-    end
-    -- Otherwise, use the title from the active pane
-    -- in that tab
-    return tab_info.active_pane.title
+  local title = tab_info.tab_title
+  -- if the tab title is explicitly set, take that
+  if title and #title > 0 then
+    return title
+  end
+  -- Otherwise, use the title from the active pane
+  -- in that tab
+  return tab_info.active_pane.title
 end
 
 --- Sessions
 config.unix_domains = {
-    {
-        name = 'unix',
-    },
+  {
+    name = 'unix',
+  },
 }
 
 local function get_current_working_dir(tab)
-    local current_dir = tab.active_pane and tab.active_pane.current_working_dir or { file_path = "" }
-    local HOME_DIR = string.format("file://%s", os.getenv("HOME"))
+  local current_dir = tab.active_pane and tab.active_pane.current_working_dir or { file_path = "" }
+  local HOME_DIR = string.format("file://%s", os.getenv("HOME"))
 
-    return current_dir == HOME_DIR and "." or string.gsub(current_dir.file_path, "(.*[/\\])(.*)", "%2")
+  return current_dir == HOME_DIR and "." or string.gsub(current_dir.file_path, "(.*[/\\])(.*)", "%2")
 end
 --- tab title format
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-    local has_unseen_output = false
-    if not tab.is_active then
-        for _, pane in ipairs(tab.panes) do
-            if pane.has_unseen_output then
-                has_unseen_output = true
-                break
-            end
-        end
+  local has_unseen_output = false
+  if not tab.is_active then
+    for _, pane in ipairs(tab.panes) do
+      if pane.has_unseen_output then
+        has_unseen_output = true
+        break
+      end
     end
+  end
 
-    local cwd = wezterm.format({
-        { Attribute = { Intensity = "Bold" } },
-        { Text = get_current_working_dir(tab) },
-    })
+  local cwd = wezterm.format({
+    { Attribute = { Intensity = "Bold" } },
+    { Text = get_current_working_dir(tab) },
+  })
 
-    local title = string.format(" [%s] %s", tab.tab_index + 1, cwd)
+  local title = string.format(" [%s] %s", tab.tab_index + 1, cwd)
 
-    if has_unseen_output then
-        return {
-            { Foreground = { Color = "#8866bb" } },
-            { Text = title },
-        }
-    end
-
+  if has_unseen_output then
     return {
-        { Text = title },
+      { Foreground = { Color = "#8866bb" } },
+      { Text = title },
     }
+  end
+
+  return {
+    { Text = title },
+  }
 end)
 -- Change opacity when I click away
 --wezterm.on('window-focus-changed', function(window, pane)
@@ -551,40 +552,40 @@ end)
 --- Leader Active Indicator
 --- Reference: https://github.com/dragonlobster/wezterm-config/blob/0aea12642cf06411046074a9ea7ff76a6a1bbccf/wezterm.lua#L298
 wezterm.on("update-right-status", function(window, _)
-    local color_scheme = window:effective_config().resolved_palette
-    local bg = wezterm.color.parse(color_scheme.background)
-    local fg = color_scheme.foreground
-    local name = window:active_key_table()
-    if name == 'copy_mode' then
-        local bell_icon = utf8.char(0x1F42A)
-        window:set_left_status(wezterm.format {
-            { Background = { Color = "#eba834" } },
-            { Text = " " .. bell_icon },
-            { Foreground = { Color = fg } },
-        })
-        return
-    end
-    local bell_icon = utf8.char(0x1F438)
-    -- Note the use of wezterm.color.parse here, this returns
-    -- a Color object, which comes with functionality for lightening
-    -- or darkening the colour (amongst other things).
-    local prefix = ""
-    local left_filler = ""
-
-    if window:leader_is_active() then
-        prefix = " " .. bell_icon
-        left_filler = ""
-    else
-        prefix = " "
-        left_filler = "  "
-    end
-
+  local color_scheme = window:effective_config().resolved_palette
+  local bg = wezterm.color.parse(color_scheme.background)
+  local fg = color_scheme.foreground
+  local name = window:active_key_table()
+  if name == 'copy_mode' then
+    local bell_icon = utf8.char(0x1F42A)
     window:set_left_status(wezterm.format {
-        { Background = { Color = bg } },
-        { Text = prefix },
-        { Foreground = { Color = fg } },
-        { Text = left_filler }
+      { Background = { Color = "#eba834" } },
+      { Text = " " .. bell_icon },
+      { Foreground = { Color = fg } },
     })
+    return
+  end
+  local bell_icon = utf8.char(0x1F438)
+  -- Note the use of wezterm.color.parse here, this returns
+  -- a Color object, which comes with functionality for lightening
+  -- or darkening the colour (amongst other things).
+  local prefix = ""
+  local left_filler = ""
+
+  if window:leader_is_active() then
+    prefix = " " .. bell_icon
+    left_filler = ""
+  else
+    prefix = " "
+    left_filler = "  "
+  end
+
+  window:set_left_status(wezterm.format {
+    { Background = { Color = bg } },
+    { Text = prefix },
+    { Foreground = { Color = fg } },
+    { Text = left_filler }
+  })
 end)
 
 return config
