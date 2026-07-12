@@ -2,6 +2,9 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # Add old bash exports
 
+# needed for wezterm/nvim 
+# Ref: https://wezterm.org/config/lua/config/term.html
+export TERM="wezterm"
 export PATH="/root/.local/bin:$PATH"
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -21,6 +24,11 @@ esac;
 echo "$machine";
 }
 
+# LESS/MAN page color
+export LESS="--RAW-CONTROL-CHARS"
+
+# Use colors for less, man, etc.
+[[ -f ~/.LESS_TERMCAP ]] && . ~/.LESS_TERMCAP
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"

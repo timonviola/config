@@ -81,3 +81,6 @@ target = "~/.aerospace.toml"
 source = "~/Documents/config/config/scripts/delete_git_branches"
 target = "~/.local/bin/delete_git_branches"
 
+[tool.less_man_page_colors]
+source = "~/Documents/config/config/LESS_TERMCAP"
+target = "~/.LESS_TERMCAP"
