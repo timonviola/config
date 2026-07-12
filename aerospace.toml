@@ -90,7 +90,10 @@ automatically-unhide-macos-hidden-apps = true
     # You can uncomment the following lines to open up terminal with alt + enter shortcut
     # (like in i3)
     # If wezterm would need the --always-new-process flag, it is best to create a .sh script
-    cmd-enter = 'exec-and-forget open -n /Applications/WezTerm.app'
+    # if wezterm is installed with brew:
+    # cmd-enter = 'exec-and-forget open -n /Applications/WezTerm.app'
+    # if manually installed:
+    cmd-enter = 'exec-and-forget open -n /Users/TIVI/Downloads/WezTerm-macos-20240203-110809-5046fc22/WezTerm.app'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
     alt-slash = 'layout tiles horizontal vertical'
