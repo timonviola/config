@@ -193,11 +193,9 @@ local setup = function()
     },
     on_attach = on_attach_with_check("lua-language-server"),
     commands = {
-      Format = {
-        function()
-          require("stylua-nvim").format_file()
-        end,
-      },
+      Format = function()
+        require("stylua-nvim").format_file()
+      end,
     },
     settings = {
       Lua = {
@@ -214,11 +212,9 @@ local setup = function()
     root_markers = { "package.json", ".git" },
     on_attach = on_attach_with_check("vscode-json-language-server"),
     commands = {
-      Format = {
-        function()
-          vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line("$"), 0 })
-        end,
-      },
+      Format = function()
+        vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line("$"), 0 })
+      end,
     },
   }
   vim.lsp.enable("jsonls")
