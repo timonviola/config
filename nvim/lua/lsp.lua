@@ -227,8 +227,17 @@ local setup = function()
     settings = {
       yaml = {
         schemas = {
-          ["https://raw.githubusercontent.com/oyvindberg/bleep/master/schema.json"] = "bleep.yaml",
+          kubernetes = { 'k8s**.yaml', 'kube*/*.yaml' },
+          -- ["https://raw.githubusercontent.com/oyvindberg/bleep/master/schema.json"] = "bleep.yaml",
+          ['https://json.schemastore.org/kustomization.json'] = 'kustomization.{yml,yaml}',
+          ['https://raw.githubusercontent.com/docker/compose/master/compose/config/compose_spec.json'] =
+          'docker-compose*.{yml,yaml}',
         },
+        -- disable the schema store to avoid weird duplicates
+        -- schemaStore = {
+        --   enable = false,
+        --   url = "",
+        -- },
       },
     },
   }
