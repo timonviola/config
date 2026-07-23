@@ -281,6 +281,20 @@ local setup = function()
       filetypes = { "python" },
       root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" },
     },
+    {
+      name = "terraformls",
+      cmd = { 'terraform-ls', 'serve' },
+      filetypes = { "terraform", "terraform-vars" },
+      root_markers = { '.terraform', '.git' },
+      capabilities = {
+        experimental = {
+          showReferencesCommandId = 'client.showReferences',
+        },
+      },
+      -- on_attach = function(_, bufnr)
+      --   vim.lsp.codelens.enable(true, { bufnr = bufnr })
+      -- end,
+    }
   }
   for _, server in pairs(servers) do
     vim.lsp.config[server.name] = {
