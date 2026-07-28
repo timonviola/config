@@ -229,10 +229,45 @@ return {
   },
   -- Other stuff
   --
-  -- allows me to open netrw with '-'
-  -- and makes netwr easier for me
-  --:help vinegar
-  "tpope/vim-vinegar",
+  -- I am too weak for netrw. It was enough with rust and python,
+  -- I can't handle scala without a tree-view
+  -- remaps are in myremaps.lua
+  {
+    "nvim-tree/nvim-tree.lua",
+    lazy = false,
+    config = function()
+      require("nvim-tree").setup({
+        on_attach = function(bufnr)
+          local api = require("nvim-tree.api")
+          -- load nvim-tree's default mappings first
+          api.map.on_attach.default(bufnr)
+          -- Vinegar style: open files in place, replacing the tree buffer
+          vim.keymap.set("n", "<CR>", api.node.open.replace_tree_buffer, {
+            desc = "nvim-tree: Open: In Place",
+            buffer = bufnr,
+            noremap = true,
+            silent = true,
+            nowait = true,
+          })
+        end,
+        live_filter = {
+          prefix = "[FILTER]: ",
+          always_show_folders = false, -- Turn into false from true by default
+        },
+        renderer = {
+          icons = {
+            show = {
+              file = false,
+              folder = false
+            }
+          },
+          indent_markers = {
+            enable = true
+          }
+        },
+      })
+    end,
+  },
   -- comment out lines with `gc`
   -- alternative: https://github.com/numToStr/Comment.nvim
   "tpope/vim-commentary",

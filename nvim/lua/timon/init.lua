@@ -34,12 +34,12 @@ opt.inccommand = "split"
 opt.modelines = 1
 opt.mouse = "a"
 opt.shada = { "!", "'1000", "<50", "s10", "h" }
-opt.swapfile = false -- Living on the edge
+opt.swapfile = false                                     -- Living on the edge
 vim.api.nvim_set_hl(0, "StatusLine", { bg = "#326941" }) -- Statusline is green
-vim.cmd("filetype plugin on") -- filetype specific settings in /after/ftp
-vim.g.netrw_liststyle = 3 -- make tree view the default
-vim.g.netrw_preview = 1 -- make vertical splitting the default
-vim.g.netrw_winsize = 30 -- make window size 30% the default
+vim.cmd("filetype plugin on")                            -- filetype specific settings in /after/ftp
+-- USE NVIM-TREE instead
+vim.g.loaded_netrw = 1                                   -- disable netrw
+vim.g.loaded_netrwPlugin = 1
 vim.opt.colorcolumn = "80"
 vim.opt.diffopt = { "internal", "filler", "closeoff", "hiddenoff", "algorithm:minimal" }
 vim.opt.expandtab = true
