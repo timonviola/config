@@ -264,6 +264,12 @@ local setup = function()
       root_markers = { "package.json", ".git" },
     },
     {
+      name = "taplo",
+      cmd = { "taplo", "lsp", "stdio" },
+      filetypes = { "toml" },
+      root_markers = { '.taplo.toml', 'taplo.toml', '.git' },
+    },
+    {
       name = "ts_ls",
       cmd = { "typescript-language-server", "--stdio" },
       filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
