@@ -291,17 +291,41 @@ local setup = function()
           showReferencesCommandId = 'client.showReferences',
         },
       },
-      -- on_attach = function(_, bufnr)
-      --   vim.lsp.codelens.enable(true, { bufnr = bufnr })
-      -- end,
-    }
+      -- terraform-ls 0.39.0 emits semantic tokens with negative (uint32-underflowed)
+      -- deltaStart values inside heredoc templates containing ${...} interpolations.
+      -- Neovim's tokens_to_ranges() then spins ~4e9 iterations of vim.str_utfindex,
+      -- which hard-freezes the editor. Treesitter already highlights terraform.
+      on_attach = function(client, _)
+        client.server_capabilities.semanticTokensProvider = nil
+      end,
+    },
+    {
+      name = "helm_ls",
+      cmd = { 'helm_ls', 'serve' },
+      filetypes = { 'helm', 'yaml.helm-values' },
+      root_markers = { 'Chart.yaml' },
+      capabilities = {
+        workspace = {
+          didChangeWatchedFiles = {
+            dynamicRegistration = true,
+          },
+        },
+      },
+    },
   }
   for _, server in pairs(servers) do
+    local checked_on_attach = on_attach_with_check(server.cmd[1])
     vim.lsp.config[server.name] = {
       cmd = server.cmd,
       filetypes = server.filetypes,
       root_markers = server.root_markers,
-      on_attach = on_attach_with_check(server.cmd[1]),
+      capabilities = server.capabilities,
+      on_attach = function(client, bufnr)
+        if server.on_attach then
+          server.on_attach(client, bufnr)
+        end
+        checked_on_attach(client, bufnr)
+      end,
     }
     vim.lsp.enable(server.name)
   end
