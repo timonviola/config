@@ -8,7 +8,7 @@ local themes = require("telescope.themes")
 map.nnoremap("<leader>ff", function()
   builtin.find_files(
     themes.get_ivy()
-    -- {layout_strategy = 'vertical', layout_config={height=0.5}}
+  -- {layout_strategy = 'vertical', layout_config={height=0.5}}
   )
 end)
 -- find git
@@ -58,6 +58,7 @@ map.xnoremap("<leader>p", '"_dP')
 -- Navigate between quick fix items
 map.nnoremap("<leader>cn", "<cmd>cnext<CR>zz", { desc = "Forward qfixlist" })
 map.nnoremap("<leader>cN", "<cmd>cprev<CR>zz", { desc = "Backward qfixlist" })
+map.nnoremap("<leader>cc", "<cmd>cclose<CR>", { desc = "Close qfixlist" })
 -- easy esc
 map.inoremap("jj", "<ESC>")
 --- tree config (netrw disabled)
