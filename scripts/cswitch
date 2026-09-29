@@ -2,6 +2,8 @@
 # 
 # Fuzzy kubernetes context switcher.
 #
+# If you use Teleport, first run tsh kube login <cluster-name> to add it to 
+# kubeconfig.
 #
 # Dependencies:
 # - kubectl
