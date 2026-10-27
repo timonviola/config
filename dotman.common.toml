@@ -39,6 +39,10 @@ target = "~/.local/bin/aswitch"
 source = "~/Documents/config/config/scripts/cswitch"
 target = "~/.local/bin/cswitch"
 
+[tool.scripts_copilot_usage]
+source = "~/Documents/config/config/scripts/copilot-usage"
+target = "~/.local/bin/copilot-usage"
+
 [tool.scripts_starship_toggle]
 source = "~/Documents/config/config/scripts/starship_toggle"
 target = "~/.local/bin/starship_toggle"

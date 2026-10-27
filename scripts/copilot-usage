@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+#
+# copilot-usage.sh - show current GitHub Copilot usage and quota.
+#
+# Requires: gh (already authenticated via `gh auth login`), jq
+#
+# Usage:
+#   ./copilot-usage.sh          # human readable summary
+#   ./copilot-usage.sh --json   # raw JSON from the API
+
+set -euo pipefail
+
+ENDPOINT="/copilot_internal/user"
+
+die() { printf 'error: %s\n' "$*" >&2; exit 1; }
+
+command -v gh >/dev/null 2>&1 || die "gh CLI not found in PATH"
+gh auth status >/dev/null 2>&1 || die "gh is not authenticated; run 'gh auth login'"
+
+raw=$(gh api "$ENDPOINT") || die "API request to $ENDPOINT failed"
+
+if [[ "${1:-}" == "--json" ]]; then
+  printf '%s\n' "$raw"
+  exit 0
+fi
+
+command -v jq >/dev/null 2>&1 || die "jq not found in PATH (or use --json)"
+
+jq -r '
+  # On token-based billing plans the authoritative figure is credits_used vs
+  # entitlement; the `remaining`/`percent_remaining` fields are a separate,
+  # lagging request-count snapshot.
+  def fmt:
+    if .unlimited then "unlimited"
+    elif .token_based_billing then
+      (.entitlement - .credits_used) as $left
+      | "\(.credits_used) / \(.entitlement) credits used (\($left) left, \((100 * $left / .entitlement) | .*10 | round / 10)%)"
+    else "\(.remaining) / \(.entitlement) left (\(.percent_remaining)%)"
+    end;
+
+  "User:        \(.login)",
+  "Plan:        \(.copilot_plan)",
+  "Quota reset: \(.quota_reset_date)",
+  "",
+  "Quotas:",
+  ( .quota_snapshots
+    | to_entries[]
+    | "  \(.key | (. + ":") | (. + "                    ")[0:22]) \(.value | fmt)"
+      + (if (.value.overage_count // 0) > 0 then "  [overage: \(.value.overage_count)]" else "" end)
+  )
+' <<<"$raw"
